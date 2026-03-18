@@ -58,7 +58,13 @@ public class PostManager {
 	 * 
 	 */
 	public void refreshFromDatabase() {
+		if(currentThreadId.equals("my-posts")) 
+		{
+			allPosts = database.getPostsFromUser(database.getCurrentUsername());
+		}
+		else {
 		allPosts = database.getPostsForThread(currentThreadId);
+		}
     }
 	
 	/**********

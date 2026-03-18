@@ -209,6 +209,31 @@ public class Database {
 	    }
 	    return result;
 	}
+	
+	/**********
+	 * <p> 
+	 * 
+	 * Title: getPostsFromUser Method. </p>
+	 * 
+	 * <p> Description: Public method gets all the posts under a certain username</p>
+	 * 
+	 * @author Noah Cilliers
+	 * 
+	 * 
+	 */
+	public List<Post> getPostsFromUser(String username) {
+	    List<Post> result = new ArrayList<>();
+	    for (Post p : postList) {
+	        if (p.getAuthorUsername().equals(username)) {
+	            result.add(p);
+	        }
+	    }
+	    return result;
+	}
+	
+	
+	
+	
 	/**********
 	 * <p> 
 	 * 
