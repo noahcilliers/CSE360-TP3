@@ -1,6 +1,8 @@
 package modelClasses;
 
 import database.Database;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import entityClasses.Post;
@@ -59,6 +61,14 @@ public class ReplyManager {
 
         boolean ok = database.addReply(parentPostId, author, content);
 
+        try {
+	    	database.insertReply(String.valueOf(parentPostId), author, content);
+	    	database.dumpReplys();
+	    	}
+	    catch(SQLException e) {
+	    	e.printStackTrace();
+	    };
+        
         if (ok) {
             refreshFromDatabase();
         }

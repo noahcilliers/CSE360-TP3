@@ -1,5 +1,7 @@
 package modelClasses;
 import database.Database;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import entityClasses.Post;
@@ -18,7 +20,7 @@ import entityClasses.Post;
  */
 public class PostManager {
 	// variables
-	private Database database;
+	 private Database database;
 	 private List<Post> allPosts = new ArrayList<>();
 	 private String currentThreadId = "general";
 	
@@ -86,7 +88,13 @@ public class PostManager {
 
 	    // First save to database
 	    boolean ok = database.addPost(threadId, authorUsername, content);
-
+	    try {
+	    	database.insertPost(threadId, authorUsername, content);
+	    	database.dumpPosts();
+	    	}
+	    catch(SQLException e) {
+	    	e.printStackTrace();
+	    };
 	    if (ok) {
 	        // Reload posts from database 
 	        refreshFromDatabase();
@@ -117,6 +125,38 @@ public class PostManager {
         return ok;
     }
 
+    /**********
+	 * <p> 
+	 * 
+	 * Title: searchPosts Method. </p>
+	 * 
+	 * <p> Description: Public method searches contents, author, and theard ID</p>
+	 * 
+	 * @author berto silvar
+	 * 
+	 * 
+	 */
+    public List<Post> searchPosts(String keyword){
+    	if(keyword == null || keyword.trim().isEmpty())
+    	{
+    		return getAllPosts();
+    	}
+    	
+    	String lowerKeyword = keyword.toLowerCase();
+    	List<Post> results = new ArrayList<>();
+    	
+    	for (Post p : allPosts)
+    	{
+    		if (p.getContent().toLowerCase().contains(lowerKeyword) || 
+    				p.getAuthorUsername().toLowerCase().contains(lowerKeyword) ||
+    				p.getThreadId().toLowerCase().contains(lowerKeyword))
+    		{
+    			results.add(p);
+    		}
+    	}
+    	
+    	return results;
+    }
   
     
 }

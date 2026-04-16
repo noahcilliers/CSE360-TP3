@@ -120,6 +120,13 @@ class ControllerReplies {
 		    }
 		}
 	 
+	 public static void goBack() {
+		    if (ViewReplies.sourcePage.equals("requests")) {
+		        guiRequests.ViewRequests.displayRequests(ViewReplies.theStage, ViewReplies.theUser);
+		    } else {
+		        guiThread.ViewThread.displayThread(ViewReplies.theStage, ViewReplies.theUser);
+		    }
+		}
 	 
 	 
 }

@@ -119,7 +119,7 @@ public class ViewReplies {
 	protected static Stage theStage;			// The Stage that JavaFX has established for us
 	private static Pane theRootPane;			// The Pane that holds all the GUI widgets 
 	protected static User theUser;				// The current logged in User
-
+	protected static String sourcePage = "thread";
 	private static Scene theRepliesScene;		// The shared Scene each invocation populates
 	
 
@@ -150,7 +150,7 @@ public class ViewReplies {
 	 * @param user specifies the User for this GUI and it's methods
 	 * 
 	 */
-	public static void displayReplies(Stage ps, User user, Post p) {
+	public static void displayReplies(Stage ps, User user, Post p, String source) {
 		
 		// Establish the references to the GUI and the current user
 		theStage = ps;
@@ -164,6 +164,8 @@ public class ViewReplies {
 		label_UserDetails.setText("User: " + theUser.getUserName());
 		label_OriginalPost.setText("Post: " + thePost.getAuthorUsername() + ": " + thePost.getContent());
 	   
+		theDatabase.markAllRepliesAsRead(thePost.getPostId(), theUser);
+		
 	    refreshReplies();
 				
 		// Set the title for the window, display the page, and wait for the Admin to do something
@@ -234,10 +236,9 @@ public class ViewReplies {
 		    setupButtonUI(button_DeletePost, "Dialog", 16, 150, Pos.CENTER, width - 170, 500);
 		    button_DeletePost.setOnAction((_) -> { ControllerReplies.deleteReply(); });
 		    
-		// Back button
-		setupButtonUI(button_Back, "Dialog", 18, 250, Pos.CENTER, 20, 540);
-		button_Back.setOnAction((_) -> ViewThread.displayThread(theStage, theUser));
-		 
+			// Back button
+			setupButtonUI(button_Back, "Dialog", 18, 250, Pos.CENTER, 20, 540);
+			button_Back.setOnAction((_) -> { ControllerReplies.goBack(); });
 		 
 		// Place all of the widget items into the Root Pane's list of children
 		theRootPane.getChildren().addAll(

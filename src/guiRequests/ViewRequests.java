@@ -1,4 +1,4 @@
-package guiThread;
+package guiRequests;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,7 +49,7 @@ import modelClasses.PostManager;
  *  
  */
 
-public class ViewThread {
+public class ViewRequests {
 	
 	/*-*******************************************************************************************
 
@@ -88,19 +88,19 @@ public class ViewThread {
 		protected static Label label_NewPost = new Label("Write a post:");
 		protected static TextArea textArea_NewPost = new TextArea();
 		protected static Button button_Post = new Button("Post");
-		protected static String currentThreadId = "general";
+		protected static String currentThreadId = "requests";
 	
 		
 	
 	// GUI Area 3: Thread display
-	protected static Label label_ThreadTitle = new Label("General Thread");
+	protected static Label label_ThreadTitle = new Label("Requests");
 	protected static ListView<Post> listView_Posts = new ListView<>();
 	
 	///change thread button
 	protected static ComboBox<String> combo_ThreadSelect = new ComboBox<>();
 
 	// ViewReplies button
-	protected static Button button_ViewReplies = new Button("View Replies");
+	protected static Button button_ViewRequest = new Button("View Request Thread");
 	
 	// delete post button
 	protected static Button button_DeletePost = new Button("Delete Post");
@@ -118,8 +118,8 @@ public class ViewThread {
 	//helper methods
 	public static void refreshPosts() {
 	    //listView_Posts.getItems().setAll(theDatabase.getPostsForThread(currentThreadId));
-		 //applicationMain.FoundationsMain.postManager
-	       // .setCurrentThread("currentThreadId");
+		 applicationMain.FoundationsMain.postManager
+	        .setCurrentThread("requests");
 	    thePostManager.refreshFromDatabase();
 	    listView_Posts.getItems().setAll(thePostManager.getAllPosts());
 	    
@@ -138,7 +138,7 @@ public class ViewThread {
 
 	
 	// These attributes are used to configure the page and populate it with this user's information
-	private static ViewThread theView;		// Used to determine if instantiation of the class
+	private static ViewRequests theView;		// Used to determine if instantiation of the class
 												// is needed
 
 	// Reference for the in-memory database so this package has access
@@ -179,7 +179,7 @@ public class ViewThread {
 	 * @param user specifies the User for this GUI and it's methods
 	 * 
 	 */
-	public static void displayThread(Stage ps, User user) {
+	public static void displayRequests(Stage ps, User user) {
 		
 		// Establish the references to the GUI and the current user
 		theStage = ps;
@@ -187,7 +187,7 @@ public class ViewThread {
 		
 		
 		// If not yet established, populate the static aspects of the GUI
-		if (theView == null) theView = new ViewThread();		// Instantiate singleton if needed
+		if (theView == null) theView = new ViewRequests();		// Instantiate singleton if needed
 		
 		
 		label_UserDetails.setText("User: " + theUser.getUserName());
@@ -196,7 +196,7 @@ public class ViewThread {
 	    refreshPosts();
 				
 		// Set the title for the window, display the page, and wait for the Admin to do something
-		theStage.setTitle("General Thread");
+		theStage.setTitle("Requests Thread");
 		theStage.setScene(theThreadScene);						// Set this page onto the stage
 		theStage.show();											// Display it to the user
 	}
@@ -212,7 +212,7 @@ public class ViewThread {
 	 * fields using the displayAdminHome method.</p>
 	 * 
 	 */
-	private ViewThread() {
+	private ViewRequests() {
 
 		// Create the Pane for the list of widgets and the Scene for the window
 		theRootPane = new Pane();
@@ -222,7 +222,7 @@ public class ViewThread {
 		// Populate the window with the title and other common widgets and set their static state
 		
 		// GUI Area 1
-		label_PageTitle.setText("Thread");
+		label_PageTitle.setText("Requests");
 		setupLabelUI(label_PageTitle, "Arial", 28, width, Pos.CENTER, 0, 5);
 
 		label_UserDetails.setText("User: " + theUser.getUserName());
@@ -235,32 +235,33 @@ public class ViewThread {
 		/// GUI Area 2
 		 setupLabelUI(label_NewPost, "Arial", 16, width, Pos.BASELINE_LEFT, 20, 410);
 		
-		 
-		 setupComboBoxUI(combo_ThreadSelect, "Dialog", 16, 160, width - 180, 50);
+		 applicationMain.FoundationsMain.postManager
+	        .setCurrentThread("requests");
+		// setupComboBoxUI(combo_ThreadSelect, "Dialog", 16, 160, width - 180, 50);
 
-		 combo_ThreadSelect.setItems(FXCollections.observableArrayList(
-		     "general", "cse360", "my-posts"  
-		 ));
-		 combo_ThreadSelect.getSelectionModel().select(currentThreadId);
+		 //combo_ThreadSelect.setItems(FXCollections.observableArrayList(
+		   //  "requests" 
+		 //));
+		 //combo_ThreadSelect.getSelectionModel().select(currentThreadId);
 
-		 combo_ThreadSelect.setOnAction((_) -> {
-		     String selected = combo_ThreadSelect.getSelectionModel().getSelectedItem();
-		     if (selected == null) return;
-		     currentThreadId = selected;
-		     label_ThreadTitle.setText(selected + " Thread");
-		     applicationMain.FoundationsMain.postManager
-		        .setCurrentThread(currentThreadId);
-		     refreshPosts();
-		 });
+		 //combo_ThreadSelect.setOnAction((_) -> {
+		   //  String selected = combo_ThreadSelect.getSelectionModel().getSelectedItem();
+		     //if (selected == null) return;
+		    // currentThreadId = selected;
+		     //label_ThreadTitle.setText(selected + " Thread");
+		     //applicationMain.FoundationsMain.postManager
+		       // .setCurrentThread(currentThreadId);
+		     //refreshPosts();
+		// });
 		 
 		 //search setup - berto
 		 setupLabelUI(label_Search, "Arial", 16, width, Pos.BASELINE_LEFT, 20, 105);
 		 setupTextUI(textField_Search, "Dialog", 16, 250, Pos.BASELINE_LEFT, 130, 105, true);
 		 setupButtonUI(button_Search, "Dialog", 14, 100, Pos.CENTER, 400,100);
-		 button_Search.setOnAction((_) ->{ ControllerThread.performSearch();});
+		 button_Search.setOnAction((_) ->{ ControllerRequests.performSearch();});
 		 setupButtonUI(button_ClearSearch, "Dialog", 14, 100, Pos.CENTER, 510, 100);
-		 button_ClearSearch.setOnAction((_) -> { ControllerThread.clearSearch(); });
-		 textField_Search.setOnAction((_) -> { ControllerThread.performSearch(); });
+		 button_ClearSearch.setOnAction((_) -> { ControllerRequests.clearSearch(); });
+		 textField_Search.setOnAction((_) -> { ControllerRequests.performSearch(); });
 		 
 		/// GUI Area 3
 		
@@ -303,26 +304,26 @@ public class ViewThread {
 		    textArea_NewPost.setPrefHeight(80);
 		    // post button
 		    setupButtonUI(button_Post, "Dialog", 16, 150, Pos.CENTER, width - 170, 455);
-		    button_Post.setOnAction((_) -> { ControllerThread.performPost(); });
+		    button_Post.setOnAction((_) -> { ControllerRequests.performPost(); });
 		    
 		    ///viewReplies button
-		    setupButtonUI(button_ViewReplies, "Dialog", 16, 150, Pos.CENTER, width - 170, 500);
-		    button_ViewReplies.setOnAction((_) -> { ControllerThread.openReplies(); });
+		    setupButtonUI(button_ViewRequest, "Dialog", 16, 150, Pos.CENTER, width - 170, 500);
+		    button_ViewRequest.setOnAction((_) -> { ControllerRequests.openReplies(); });
 		    
 		    ///delete post button
 		    setupButtonUI(button_DeletePost, "Dialog", 16, 150, Pos.CENTER, width - 170, 545);
-		    button_DeletePost.setOnAction((_) -> { ControllerThread.deletePost(); });
+		    button_DeletePost.setOnAction((_) -> { ControllerRequests.deletePost(); });
 		    
 		// Back button
 		setupButtonUI(button_Back, "Dialog", 18, 250, Pos.CENTER, 20, 540);
-		button_Back.setOnAction((_) -> { ControllerThread.goBack(); });
+		button_Back.setOnAction((_) -> { ControllerRequests.goBack(); });
 		 
 		 
 		// Place all of the widget items into the Root Pane's list of children
 		theRootPane.getChildren().addAll(
 			label_PageTitle, label_UserDetails, line_Separator1,
     		button_Post, button_Back, combo_ThreadSelect,
-    		label_NewPost, textArea_NewPost, listView_Posts, label_ThreadTitle, button_ViewReplies, button_DeletePost
+    		label_NewPost, textArea_NewPost, listView_Posts, label_ThreadTitle, button_ViewRequest, button_DeletePost
     		, label_Search, textField_Search, button_Search, button_ClearSearch); // added these for search - berto
 		
 		// With theRootPane set up with the common widgets, it is up to displayAdminHome to show

@@ -55,7 +55,8 @@ public class ViewRole2Home {
 
 	// GUI ARea 2: This is a stub, so there are no widgets here.  For an actual role page, this are
 	// would contain the widgets needed for the user to play the assigned role.
-	
+	protected static Button button_GeneralThread = new Button("General Thread");
+	protected static Button button_RequestsThread = new Button("Requests");
 	
 	
 	// This is a separator and it is used to partition the GUI for various tasks
@@ -163,6 +164,17 @@ public class ViewRole2Home {
 		button_UpdateThisUser.setOnAction((_) -> {ControllerRole2Home.performUpdate(); });
 		
 		// GUI Area 2
+		setupButtonUI(button_GeneralThread, "Dialog", 18, 250, Pos.CENTER, 20, 300);
+		button_GeneralThread.setOnAction((_) -> 
+		    { guiThread.ViewThread.displayThread(theStage, theUser); });
+		
+		
+		setupButtonUI(button_RequestsThread, "Dialog", 18, 250, Pos.CENTER, 20, 370);
+		button_RequestsThread.setOnAction((_) -> 
+		    { guiRequests.ViewRequests.displayRequests(theStage, theUser); });
+		
+		
+		
 		
 			// This is a stub, so this area is empty
 		
@@ -179,7 +191,7 @@ public class ViewRole2Home {
 		// Place all of the widget items into the Root Pane's list of children
         theRootPane.getChildren().addAll(
 			label_PageTitle, label_UserDetails, button_UpdateThisUser, line_Separator1,
-	        line_Separator4, button_Logout, button_Quit);
+	        line_Separator4, button_Logout, button_Quit, button_GeneralThread, button_RequestsThread);
 	}
 	
 	

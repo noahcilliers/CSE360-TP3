@@ -1,4 +1,4 @@
-package guiThread;
+package guiRequests;
 
 import entityClasses.Post;
 import guiReplies.ViewReplies;
@@ -18,7 +18,7 @@ import java.util.Optional;
  * 
  * 
  */
-public class ControllerThread {
+public class ControllerRequests {
 
 	private static final int MAX_POST_LENGTH = 300;
 	/**********
@@ -33,7 +33,7 @@ public class ControllerThread {
 	 * 
 	 */
 	public static void performPost() {
-	    String content = ViewThread.textArea_NewPost.getText().trim();
+	    String content = ViewRequests.textArea_NewPost.getText().trim();
 	    // input validation
 	   
 	    if (content.isEmpty())
@@ -59,14 +59,14 @@ public class ControllerThread {
 	    
 	    
 	    boolean ok = applicationMain.FoundationsMain.postManager.addPost(
-	    	ViewThread.currentThreadId,
-	        ViewThread.theUser.getUserName(),
+	    	"requests",
+	        ViewRequests.theUser.getUserName(),
 	        content
 	    );
 
 	    if (ok) {
-	        ViewThread.textArea_NewPost.clear();
-	        ViewThread.refreshPosts();
+	        ViewRequests.textArea_NewPost.clear();
+	        ViewRequests.refreshPosts();
 	    }
 	}
 	 /**********
@@ -81,7 +81,7 @@ public class ControllerThread {
 		 * 
 		 */
 	 public static void openReplies() {
-		    Post p = ViewThread.listView_Posts.getSelectionModel().getSelectedItem();
+		    Post p = ViewRequests.listView_Posts.getSelectionModel().getSelectedItem();
 		    if (p == null)
 		    { 
 	        	 Alert a = new Alert(AlertType.ERROR);
@@ -91,7 +91,7 @@ public class ControllerThread {
 	        	
 	        	return;
 	        }
-		    ViewReplies.displayReplies(ViewThread.theStage, ViewThread.theUser, p, "thread");
+		    ViewReplies.displayReplies(ViewRequests.theStage, ViewRequests.theUser, p, "requests");
 		}
 	
 	 /**********
@@ -106,7 +106,7 @@ public class ControllerThread {
 		 * 
 		 */
 	 public static void deletePost() {
-		    Post p = ViewThread.listView_Posts.getSelectionModel().getSelectedItem();
+		    Post p = ViewRequests.listView_Posts.getSelectionModel().getSelectedItem();
 		    if (p == null) 
 		    { 
 	        	 Alert a = new Alert(AlertType.ERROR);
@@ -117,7 +117,7 @@ public class ControllerThread {
 	        	return;
 	        }
 
-		    if (!p.getAuthorUsername().equals(ViewThread.theUser.getUserName())) {
+		    if (!p.getAuthorUsername().equals(ViewRequests.theUser.getUserName())) {
 		        Alert a = new Alert(AlertType.ERROR);
 		        a.setTitle("Delete Post");
 		        a.setHeaderText("You can only delete your own posts.");
@@ -134,7 +134,7 @@ public class ControllerThread {
 
 		    if (result.isPresent() && result.get() == ButtonType.OK) {
 		    boolean ok = applicationMain.FoundationsMain.postManager.softDeletePost(p.getPostId());
-		    	if (ok) {ViewThread.refreshPosts();}
+		    	if (ok) {ViewRequests.refreshPosts();}
 		    }
 		}
 	 
@@ -152,23 +152,22 @@ public class ControllerThread {
 		 */
     public static void goBack() {
         // send them back to their role home page (Role1Home )
-    	 if (ViewThread.theUser.getAdminRole()) {
-    	        guiAdminHome.ViewAdminHome.displayAdminHome(ViewThread.theStage, ViewThread.theUser);
-    	    } else if (ViewThread.theUser.getNewRole1()) {
-    	        guiRole1.ViewRole1Home.displayRole1Home(ViewThread.theStage, ViewThread.theUser);
-    	    } else if (ViewThread.theUser.getNewRole2()) {
-    	        guiRole2.ViewRole2Home.displayRole2Home(ViewThread.theStage, ViewThread.theUser);
-    	    }
+    	//if staff 
+    	//if(database.getRole2()){
+        guiRole2.ViewRole2Home.displayRole2Home(ViewRequests.theStage, ViewRequests.theUser);
+        // }
+        // else go to admin home
+        // need to change this for threads too
     }
     
     public static void performSearch() {
-    	ViewThread.refreshPosts();
+    	ViewRequests.refreshPosts();
     	
     }
     
     public static void clearSearch() {
-    	ViewThread.textField_Search.clear();
-    	ViewThread.refreshPosts();
+    	ViewRequests.textField_Search.clear();
+    	ViewRequests.refreshPosts();
     }
 
   
