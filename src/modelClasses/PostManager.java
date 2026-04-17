@@ -88,13 +88,24 @@ public class PostManager {
 
 	    // First save to database
 	    boolean ok = database.addPost(threadId, authorUsername, content);
-	    try {
-	    	database.insertPost(threadId, authorUsername, content);
-	    	database.dumpPosts();
+	    if(ok) {
+	    	Post newestPost = database.getPostById(getLatestPostId());
+	    	if (newestPost != null) {
+	    		try {
+	    	    	database.insertPost(newestPost.getPostId(),
+	    	    			newestPost.getThreadId(),
+	    	    			newestPost.getAuthorUsername(),
+	    	    			newestPost.getContent(),
+	    	    			newestPost.getStatus(),
+	    	    			newestPost.isEdited());
+	    	    	database.dumpPosts();
+	    	    	}
+	    	    catch(SQLException e) {
+	    	    	e.printStackTrace();
+	    	    };	
 	    	}
-	    catch(SQLException e) {
-	    	e.printStackTrace();
-	    };
+	    }
+	    
 	    if (ok) {
 	        // Reload posts from database 
 	        refreshFromDatabase();
@@ -149,7 +160,8 @@ public class PostManager {
     	{
     		if (p.getContent().toLowerCase().contains(lowerKeyword) || 
     				p.getAuthorUsername().toLowerCase().contains(lowerKeyword) ||
-    				p.getThreadId().toLowerCase().contains(lowerKeyword))
+    				p.getThreadId().toLowerCase().contains(lowerKeyword) ||
+    				p.getStatus().toLowerCase().contains(lowerKeyword))
     		{
     			results.add(p);
     		}
@@ -157,6 +169,46 @@ public class PostManager {
     	
     	return results;
     }
-  
     
+    private long getLatestPostId() {
+    	long maxId = -1;
+    	for (Post p : database.getPostsForThread(currentThreadId)) {
+    		if (p.getPostId() > maxId) {
+    			maxId = p.getPostId();
+    		}
+    	}
+    	
+    	if(maxId == -1) {
+    		for(Post p : allPosts) {
+    			if(p.getPostId() > maxId) {
+    				maxId = p.getPostId();
+    			}
+    		}
+    	}
+    	return maxId;
+    }
+    
+    public boolean closePost(long postId) {
+    	boolean ok = database.setPostStatus(postId, "CLOSED");
+    	if(ok) {
+    		refreshFromDatabase();
+    	}
+    	return ok;
+    }
+    
+    public boolean openPost(long postId) {
+    	boolean ok = database.setPostStatus(postId, "OPEN");
+    	if(ok) {
+    		refreshFromDatabase();
+    	}
+    	return ok;
+    }
+    
+    public boolean editPost(long postId, String newContent) {
+    	boolean ok = database.editPost(postId, newContent);
+    	if(ok) {
+    		refreshFromDatabase();
+    	}
+    	return ok;
+    }
 }

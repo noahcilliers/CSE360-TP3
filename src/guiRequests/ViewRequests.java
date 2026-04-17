@@ -78,6 +78,11 @@ public class ViewRequests {
 	protected static Button button_Search = new Button("Search");
 	protected static Button button_ClearSearch = new Button("Clear");
 	
+	//requests buttons for edit, close, open
+	protected static Button button_OpenRequest = new Button("ReOpen Request");
+	protected static Button button_CloseRequest = new Button("Close Request");
+	protected static Button button_UpdateRequest = new Button("Update Request");
+	protected static Post requestBeingUpdated = null;
 	// This is a separator and it is used to partition the GUI for various tasks
 	private static Line line_Separator1 = new Line(20, 95, width-20, 95);
 		
@@ -290,10 +295,11 @@ public class ViewRequests {
 			            text += "[" + p.getThreadId() + "] ";
 			        }
 			       
-			        text += p.getAuthorUsername() + ": " + p.getContent() + unreadPost + "  (" + replyCount + " replies)" + " (" + totalNewReplies + " New Replies)";
-			        setText(text);
+			        String editedText = p.isEdited() ? " [Edited]" : "";
+			        text += "[" + p.getStatus() + "] " + p.getAuthorUsername() + ": " + p.getContent()
+			                + editedText + unreadPost + "  (" + replyCount + " replies)" + " (" + totalNewReplies + " New Replies)";
 			        
-			   
+			        setText(text);
 			    }
 			});
 		
@@ -303,28 +309,35 @@ public class ViewRequests {
 		    textArea_NewPost.setPrefWidth(width - 200);
 		    textArea_NewPost.setPrefHeight(80);
 		    // post button
-		    setupButtonUI(button_Post, "Dialog", 16, 150, Pos.CENTER, width - 170, 455);
+		    setupButtonUI(button_Post, "Dialog", 18, 150, Pos.CENTER, width - 170, 440);
 		    button_Post.setOnAction((_) -> { ControllerRequests.performPost(); });
 		    
 		    ///viewReplies button
-		    setupButtonUI(button_ViewRequest, "Dialog", 16, 150, Pos.CENTER, width - 170, 500);
+		    setupButtonUI(button_ViewRequest, "Dialog", 18, 150, Pos.CENTER, width - 450, 560);
 		    button_ViewRequest.setOnAction((_) -> { ControllerRequests.openReplies(); });
 		    
 		    ///delete post button
-		    setupButtonUI(button_DeletePost, "Dialog", 16, 150, Pos.CENTER, width - 170, 545);
+		    setupButtonUI(button_DeletePost, "Dialog", 18, 150, Pos.CENTER, width - 170, 560);
 		    button_DeletePost.setOnAction((_) -> { ControllerRequests.deletePost(); });
 		    
 		// Back button
-		setupButtonUI(button_Back, "Dialog", 18, 250, Pos.CENTER, 20, 540);
+		setupButtonUI(button_Back, "Dialog", 18, 150, Pos.CENTER, 20, 560);
 		button_Back.setOnAction((_) -> { ControllerRequests.goBack(); });
 		 
-		 
+		setupButtonUI(button_OpenRequest, "Dialog", 18, 150, Pos.CENTER, width - 620, 560);
+		button_OpenRequest.setOnAction((_) -> { ControllerRequests.openRequest(); });
+
+		setupButtonUI(button_CloseRequest, "Dialog", 18, 150, Pos.CENTER, width - 170, 520);
+		button_CloseRequest.setOnAction((_) -> { ControllerRequests.closeRequest(); });
+
+		setupButtonUI(button_UpdateRequest, "Dialog", 18, 150, Pos.CENTER, width - 170, 480);
+		button_UpdateRequest.setOnAction((_) -> { ControllerRequests.updateRequest(); });
 		// Place all of the widget items into the Root Pane's list of children
 		theRootPane.getChildren().addAll(
 			label_PageTitle, label_UserDetails, line_Separator1,
     		button_Post, button_Back, combo_ThreadSelect,
     		label_NewPost, textArea_NewPost, listView_Posts, label_ThreadTitle, button_ViewRequest, button_DeletePost
-    		, label_Search, textField_Search, button_Search, button_ClearSearch); // added these for search - berto
+    		, label_Search, textField_Search, button_Search, button_ClearSearch, button_CloseRequest, button_UpdateRequest, button_OpenRequest); // added these for search - berto
 		
 		// With theRootPane set up with the common widgets, it is up to displayAdminHome to show
 		// that Pane to the user after the dynamic elements of the widgets have been updated.

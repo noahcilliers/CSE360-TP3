@@ -118,22 +118,44 @@ public class Database {
  * 
  */
 	private void initPostList() throws SQLException {
+		postList.clear();
+		nextPostId = 0;
+		
 		String query = "SELECT * FROM USERPOSTS";
 		ResultSet resultSet = statement.executeQuery(query);
-		ResultSetMetaData meta = resultSet.getMetaData();
+		
 		System.out.println("Initializing Post list");
-		while (resultSet.next()) {
-			for (int i = 0; i < meta.getColumnCount(); i=i+4) {
-				String postId = resultSet.getString(i+1);
-				String threadId = resultSet.getString(i+2);
-				String authorUsername = resultSet.getString(i+ 3);
-				String contents = resultSet.getString(i+ 4);
-				System.out.println("postId: " + postId + "threadId: " + threadId + " User: " + authorUsername + " contents: " + contents);
-				addPost(threadId, authorUsername, contents);
+		
+		while(resultSet.next()) {
+			long postId = Long.parseLong(resultSet.getString("postId"));
+			String threadId = resultSet.getString("thread");
+			String authorUsername = resultSet.getString("authorUsername");
+			String contents = resultSet.getString("contents");
+			
+			String status = resultSet.getString("status");
+			if(status == null || status.trim().isEmpty()) {
+				status = "OPEN";
 			}
 			
-			System.out.println();
+			boolean edited = false;
+			try {
+				edited = resultSet.getBoolean("edited");
+			} catch (Exception e) {
+				edited = false;
+			}
+			
+			Post p = new Post(postId, threadId, authorUsername, contents, status, edited);
+			postList.add(p);
+			
+			if(postId > nextPostId) {
+				nextPostId = postId;
+			}
+			
+			System.out.println("postId: " + postId + " threadId: " + threadId +
+					" User: " + authorUsername + " contents: " + contents +
+					" status: " + status + " edited: " + edited);
 		}
+		
 		resultSet.close();
 	};
 	
@@ -211,7 +233,9 @@ public class Database {
                 + "postId VARCHAR(255), "
                 + "thread VARCHAR(255), "
                 + "authorUsername VARCHAR(255), "
-                + "contents VARCHAR(1000))";
+                + "contents VARCHAR(1000),"
+        		+ "status VARCHAR(20),"
+        		+ "edited BOOLEAN)";
         statement.execute(userPostsTable);
 
         // Create the reply table
@@ -240,13 +264,15 @@ public class Database {
 * @param contents up to 1000 characters of text to be stored in the post.
 * 
 */
-	public void insertPost(String threadId, String authorUsername, String contents) throws SQLException {
-		String insertPost = "INSERT INTO userPosts (postID, thread, authorUsername, contents) VALUES (?, ?, ?, ?)";
+	public void insertPost(long postId, String threadId, String authorUsername, String contents, String status, boolean edited) throws SQLException {
+		String insertPost = "INSERT INTO userPosts (postID, thread, authorUsername, contents, status, edited) VALUES (?, ?, ?, ?, ?, ?)";
 		try (PreparedStatement pstmt = connection.prepareStatement(insertPost)) {
-			pstmt.setString(1, String.valueOf(nextPostId));
+			pstmt.setString(1, String.valueOf(postId));
 			pstmt.setString(2, threadId);		
 			pstmt.setString(3, authorUsername);
-			pstmt.setString(4, contents);		
+			pstmt.setString(4, contents);
+			pstmt.setString(5, status);
+			pstmt.setBoolean(6, edited);
 			pstmt.executeUpdate();
 		};
 	};
@@ -372,19 +398,91 @@ public class Database {
 	
 		if(contents == null || contents.trim().isEmpty()) {return false;}
 	    nextPostId++;
+	    String status = threadId.equals("requests") ? "OPEN" : "";
+	    boolean edited = false;
 		Post p = new Post(
 	            nextPostId,
 	            threadId,
 	            authorUsername,
-	            contents.trim()
-	           
+	            contents.trim(),
+	            status,
+	            edited
 	        );
 	    postList.add(p);
 	    return true;
 	}
 	
+	public Post getPostById(long postId) {
+		for (Post p : postList) {
+			if (p.getPostId() == postId) {
+				return p;
+			}
+		}
+		
+		return null;
+	}
 	
+	private void updatePostContentInDB(long postId, String newContent) throws SQLException {
+		String sql = "UPDATE userPosts SET  contents = ?, edited = ? WHERE postId = ?";
+		try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setString(1, newContent);
+			pstmt.setBoolean(2, true);
+			pstmt.setString(3, String.valueOf(postId));
+			pstmt.executeUpdate();
+		}
+	}
 	
+	public boolean editPost(long postId, String newContent) {
+		if(newContent == null || newContent.trim().isEmpty()) {
+			return false;
+		}
+		
+		for(Post p : postList) {
+			if(p.getPostId() == postId) {
+				p.setContent(newContent.trim());
+				p.setEdited(true);
+				
+				try {
+					updatePostContentInDB(postId, newContent.trim());
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	private void updatePostStatusInDB(long postId, String status) throws SQLException{
+		String sql = "UPDATE userPosts SET status = ? WHERE postId = ?";
+		try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
+			pstmt.setString(1, status);
+			pstmt.setString(2, String.valueOf(postId));
+			pstmt.executeUpdate();
+		}
+	}
+	
+	public boolean setPostStatus(long postId, String status) {
+		if(status == null || status.trim().isEmpty()) {
+			return false;
+		}
+		for (Post p : postList) {
+			if(p.getPostId() == postId) {
+				p.setStatus(status);
+				
+				try {
+					updatePostStatusInDB(postId, status);
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
+				
+				return true;
+			}
+		}
+		
+		return false;
+	}
 	/**********
 	 * <p> 
 	 * 
@@ -446,6 +544,7 @@ public class Database {
 	        if (p.getPostId() == postId) {
 	            p.setContent("[Post deleted]");
 	            p.setAuthorUsername("[Deleted]");
+	            p.setEdited(false);
 	            try {
 	            	deletePostFromDB(postId);
 	            }

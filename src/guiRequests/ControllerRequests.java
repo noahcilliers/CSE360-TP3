@@ -5,6 +5,8 @@ import guiReplies.ViewReplies;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.TextInputDialog;
+
 import java.util.Optional;
 
 /*******
@@ -33,9 +35,16 @@ public class ControllerRequests {
 	 * 
 	 */
 	public static void performPost() {
-	    String content = ViewRequests.textArea_NewPost.getText().trim();
+	   if(ViewRequests.requestBeingUpdated != null) {
+		   Alert a = new Alert(AlertType.ERROR);
+		   a.setTitle("Update In Progress");
+		   a.setContentText("Finishing updating the selected request before posting a new one. ");
+		   a.showAndWait();
+		   return;
+	   }
+	    
+	   String content = ViewRequests.textArea_NewPost.getText().trim();
 	    // input validation
-	   
 	    if (content.isEmpty())
 	    { 
        	 Alert a = new Alert(AlertType.ERROR);
@@ -170,7 +179,90 @@ public class ControllerRequests {
     	ViewRequests.refreshPosts();
     }
 
+    public static void updateRequest() {
+        String content = ViewRequests.textArea_NewPost.getText().trim();
+
+        // If not currently updating, load selected request into the text box
+        if (ViewRequests.requestBeingUpdated == null) {
+            Post p = ViewRequests.listView_Posts.getSelectionModel().getSelectedItem();
+
+            if (p == null) {
+                Alert a = new Alert(AlertType.ERROR);
+                a.setTitle("Request Selection");
+                a.setContentText("Select a request to update.");
+                a.showAndWait();
+                return;
+            }
+
+            ViewRequests.requestBeingUpdated = p;
+            ViewRequests.textArea_NewPost.setText(p.getContent());
+            ViewRequests.textArea_NewPost.requestFocus();
+            ViewRequests.button_UpdateRequest.setText("Save Update");
+            return;
+        }
+
+        if (content.isEmpty()) {
+            Alert a = new Alert(AlertType.ERROR);
+            a.setTitle("Update Request");
+            a.setContentText("Request text cannot be empty.");
+            a.showAndWait();
+            return;
+        }
+
+        if (content.length() > MAX_POST_LENGTH) {
+            Alert a = new Alert(AlertType.ERROR);
+            a.setTitle("Request Too Long");
+            a.setHeaderText("Your updated request is too long.");
+            a.setContentText("Maximum length is " + MAX_POST_LENGTH +
+                    " characters. You are at " + content.length() + ".");
+            a.showAndWait();
+            return;
+        }
+
+        boolean ok = applicationMain.FoundationsMain.postManager.editPost(
+                ViewRequests.requestBeingUpdated.getPostId(),
+                content
+        );
+
+        if (ok) {
+            ViewRequests.requestBeingUpdated = null;
+            ViewRequests.textArea_NewPost.clear();
+            ViewRequests.button_UpdateRequest.setText("Update Request");
+            ViewRequests.refreshPosts();
+        }
+    }
   
+    public static void closeRequest() {
+        Post p = ViewRequests.listView_Posts.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            Alert a = new Alert(AlertType.ERROR);
+            a.setTitle("Request Selection");
+            a.setContentText("There is no request selected");
+            a.showAndWait();
+            return;
+        }
+
+        boolean ok = applicationMain.FoundationsMain.postManager.closePost(p.getPostId());
+        if (ok) {
+            ViewRequests.refreshPosts();
+        }
+    }
+
+    public static void openRequest() {
+        Post p = ViewRequests.listView_Posts.getSelectionModel().getSelectedItem();
+        if (p == null) {
+            Alert a = new Alert(AlertType.ERROR);
+            a.setTitle("Request Selection");
+            a.setContentText("There is no request selected");
+            a.showAndWait();
+            return;
+        }
+
+        boolean ok = applicationMain.FoundationsMain.postManager.openPost(p.getPostId());
+        if (ok) {
+            ViewRequests.refreshPosts();
+        }
+    }
 
   
 }
