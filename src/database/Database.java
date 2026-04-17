@@ -422,6 +422,13 @@ public class Database {
 		return null;
 	}
 	
+	/**
+	 * Title: updatePostsContentInDB, updates the body of a requests
+	 * @author Berto
+	 * @param postId
+	 * @param newContent
+	 * @throws SQLException
+	 */
 	private void updatePostContentInDB(long postId, String newContent) throws SQLException {
 		String sql = "UPDATE userPosts SET  contents = ?, edited = ? WHERE postId = ?";
 		try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -432,6 +439,13 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Title editPost, used to edit a requests in the post section
+	 * @param postId
+	 * @param newContent
+	 * @return
+	 * @author berto
+	 */
 	public boolean editPost(long postId, String newContent) {
 		if(newContent == null || newContent.trim().isEmpty()) {
 			return false;
@@ -454,6 +468,13 @@ public class Database {
 		return false;
 	}
 	
+	/**
+	 * Title: updatePostStatusInDB, update the status in the Database
+	 * @author Berto
+	 * @param postId
+	 * @param status
+	 * @throws SQLException
+	 */
 	private void updatePostStatusInDB(long postId, String status) throws SQLException{
 		String sql = "UPDATE userPosts SET status = ? WHERE postId = ?";
 		try(PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -463,6 +484,13 @@ public class Database {
 		}
 	}
 	
+	/**
+	 * Title: setPostStatus, sets the post status at the start
+	 * @author Berto
+	 * @param postId
+	 * @param status
+	 * @return
+	 */
 	public boolean setPostStatus(long postId, String status) {
 		if(status == null || status.trim().isEmpty()) {
 			return false;

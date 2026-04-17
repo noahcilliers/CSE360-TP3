@@ -170,6 +170,11 @@ public class PostManager {
     	return results;
     }
     
+    /**
+     * Title: getLatestPostId, gets the latest postId
+     * @author Berto
+     * @return
+     */
     private long getLatestPostId() {
     	long maxId = -1;
     	for (Post p : database.getPostsForThread(currentThreadId)) {
@@ -188,6 +193,12 @@ public class PostManager {
     	return maxId;
     }
     
+    /**
+     * Title: closePost, sets a requests to closed
+     * @author Berto
+     * @param postId
+     * @return
+     */
     public boolean closePost(long postId) {
     	boolean ok = database.setPostStatus(postId, "CLOSED");
     	if(ok) {
@@ -196,6 +207,12 @@ public class PostManager {
     	return ok;
     }
     
+    /**
+     * Title: openPost, sets a post to open
+     * @author Berto
+     * @param postId
+     * @return
+     */
     public boolean openPost(long postId) {
     	boolean ok = database.setPostStatus(postId, "OPEN");
     	if(ok) {
@@ -204,6 +221,13 @@ public class PostManager {
     	return ok;
     }
     
+    /**
+     * Title: editPost, updates a post with the new body
+     * @author Berto
+     * @param postId
+     * @param newContent
+     * @return
+     */
     public boolean editPost(long postId, String newContent) {
     	boolean ok = database.editPost(postId, newContent);
     	if(ok) {
