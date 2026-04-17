@@ -21,11 +21,12 @@ public class Post {
 	private String status;
 	private boolean edited;
 	
+	// provides back ward compatibility with requests or just regular posts
 	public Post(long postId, String thread, String authorUsername, String contents) {
 		this(postId, thread, authorUsername, contents, "", false);
 	}
 
-
+// new constructor for requests posts
 public Post(long postId, String thread, String authorUsername, String contents, String status, boolean edited) 
 {
 	this.postId = postId;

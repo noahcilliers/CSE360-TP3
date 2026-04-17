@@ -169,16 +169,28 @@ public class ControllerRequests {
         // need to change this for threads too
     }
     
+    /**
+     * Title: performSearch, performs the search
+     * @author Berto
+     */
     public static void performSearch() {
     	ViewRequests.refreshPosts();
     	
     }
     
+    /**
+     * Title: clearSearch, clears the search field
+     * @author Berto
+     */
     public static void clearSearch() {
     	ViewRequests.textField_Search.clear();
     	ViewRequests.refreshPosts();
     }
-
+    
+    /**
+     * Title: updateRequests, updates a requests, also dose input validation
+     * @author Berto
+     */
     public static void updateRequest() {
         String content = ViewRequests.textArea_NewPost.getText().trim();
 
@@ -232,6 +244,10 @@ public class ControllerRequests {
         }
     }
   
+    /**
+     * Title: closeRequest, closes a requests
+     * @author Berto
+     */
     public static void closeRequest() {
         Post p = ViewRequests.listView_Posts.getSelectionModel().getSelectedItem();
         if (p == null) {
@@ -248,6 +264,10 @@ public class ControllerRequests {
         }
     }
 
+    /**
+     * Title: openRequest, sets a requests to open
+     * @author Berto
+     */
     public static void openRequest() {
         Post p = ViewRequests.listView_Posts.getSelectionModel().getSelectedItem();
         if (p == null) {
