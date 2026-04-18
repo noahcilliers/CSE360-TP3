@@ -1,5 +1,9 @@
 package guiRole2;
 
+import database.Database;
+import guiThread.ViewThread;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 
 /*******
  * <p> Title: ControllerRole2Home Class. </p>
@@ -24,7 +28,7 @@ package guiRole2;
 public class ControllerRole2Home {
 	
 	/*-*******************************************************************************************
-
+	
 	User Interface Actions for this page
 	
 	This controller is not a class that gets instantiated.  Rather, it is a collection of protected
@@ -32,13 +36,78 @@ public class ControllerRole2Home {
 	the Model is often just a stub, or will be a singleton instantiated object.
 	
 	 */
-
+	// Reference for the in-memory database so this package has access
+	private static Database theDatabase = applicationMain.FoundationsMain.database;
+	private static final int MAX_THREAD_NAME_LENGTH = 10;
 	/**
 	 * Default constructor is not used.
 	 */
 	public ControllerRole2Home() {
 	}
 
+	/**********
+	 * <p> Method: addThread() </p>
+	 * 
+	 * @param name name of the new thread to be created.
+	 * 
+	 * <p> Description: This method adds a new thread to the thread combobox. </p>
+	 * 
+	 */
+	protected static void addThread() {
+		String content = ViewRole2Home.textArea_NewThread.getText().trim();
+	    // input validation
+	   
+	    if (content.isEmpty())
+	    { 
+       	 Alert a = new Alert(AlertType.ERROR);
+		        a.setTitle("Thread name not written");
+		        a.setContentText("You must write A thread name");
+		        a.showAndWait();
+       	
+       	
+       	return;
+       }
+	    
+	    if (content.length() > MAX_THREAD_NAME_LENGTH) {
+	        Alert a = new Alert(AlertType.ERROR);
+	        a.setTitle("Thread name Too Long");
+	        a.setHeaderText("Your thread name is too long.");
+	        a.setContentText("Maximum length is " + MAX_THREAD_NAME_LENGTH +
+	                         " characters. You are at " + content.length() + ".");
+	        a.showAndWait();
+	        return;
+	    }
+		
+		//guiThread.ViewThread.Thread_list.add(name);
+		boolean ret = theDatabase.createThread(content);
+		if(ret) {
+			System.out.println("Thread: " + content + " created succesfully");
+			ViewRole2Home.textArea_NewThread.clear();
+		}
+		else {
+			System.out.println("Thread: " + content + " not created succesfully");
+			 Alert a = new Alert(AlertType.ERROR);
+		        a.setTitle("Thread name already in use");
+		        a.setHeaderText("Your thread name a duplicate");
+		        a.setContentText("Please change your thread name input from " + content + ".");
+		        a.showAndWait();
+		        return;
+		};
+	};
+	
+	
+	/**********
+	 * <p> Method: addThread() </p>
+	 * 
+	 * @param name name of the new thread to be removed.
+	 * 
+	 * <p> Description: This method removes a thread from the thread combobox. </p>
+	 * 
+	 */
+	protected static void removeThread(String name) {
+		System.out.println("removeThread not yet implimented");
+	};
+	
 	/**********
 	 * <p> Method: performUpdate() </p>
 	 * 

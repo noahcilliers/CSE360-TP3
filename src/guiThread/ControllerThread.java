@@ -1,6 +1,7 @@
 package guiThread;
 
 import entityClasses.Post;
+import entityClasses.User;
 import guiReplies.ViewReplies;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
@@ -146,19 +147,37 @@ public class ControllerThread {
 		 * 
 		 * <p> Description: Public method sends user to the home page</p>
 		 * 
+		 * @param theUser specifies the User object for the perposes of returning to the correct home page
+		 * 
 		 * @author Noah Cilliers
 		 * 
 		 * 
 		 */
-    public static void goBack() {
+    public static void goBack(User theUser) {
         // send them back to their role home page (Role1Home )
-    	 if (ViewThread.theUser.getAdminRole()) {
+    		/*
+    	if (ViewThread.theUser.getAdminRole()) {
     	        guiAdminHome.ViewAdminHome.displayAdminHome(ViewThread.theStage, ViewThread.theUser);
     	    } else if (ViewThread.theUser.getNewRole1()) {
     	        guiRole1.ViewRole1Home.displayRole1Home(ViewThread.theStage, ViewThread.theUser);
     	    } else if (ViewThread.theUser.getNewRole2()) {
     	        guiRole2.ViewRole2Home.displayRole2Home(ViewThread.theStage, ViewThread.theUser);
     	    }
+    		 */
+    	// send them back to their role home page	
+    	if(theUser.chosenRole.equals("Role1")) {
+    		guiRole1.ViewRole1Home.displayRole1Home(ViewThread.theStage, ViewThread.theUser);
+    	}
+    	else if (theUser.chosenRole.equals("Role2")) {
+    		guiRole2.ViewRole2Home.displayRole2Home(ViewThread.theStage, ViewThread.theUser);
+    	}
+    	else if (theUser.chosenRole.equals("Admin")) {
+    		guiAdminHome.ViewAdminHome.displayAdminHome(ViewThread.theStage, ViewThread.theUser);
+    	}
+    	else if(theUser.chosenRole.equals("NULL")) {
+    		System.out.println("NO ROLE CHOSEN");
+    	};
+    
     }
     
     public static void performSearch() {
