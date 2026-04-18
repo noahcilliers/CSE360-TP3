@@ -238,9 +238,7 @@ public class ViewThread {
 		 
 		 setupComboBoxUI(combo_ThreadSelect, "Dialog", 16, 160, width - 180, 50);
 
-		 combo_ThreadSelect.setItems(FXCollections.observableArrayList(
-		     "general", "cse360", "my-posts"  
-		 ));
+		 combo_ThreadSelect.setItems(theDatabase.getThreadsList());
 		 combo_ThreadSelect.getSelectionModel().select(currentThreadId);
 
 		 combo_ThreadSelect.setOnAction((_) -> {
@@ -315,7 +313,7 @@ public class ViewThread {
 		    
 		// Back button
 		setupButtonUI(button_Back, "Dialog", 18, 250, Pos.CENTER, 20, 540);
-		button_Back.setOnAction((_) -> { ControllerThread.goBack(); });
+		button_Back.setOnAction((_) -> { ControllerThread.goBack(theUser); });
 		 
 		 
 		// Place all of the widget items into the Root Pane's list of children

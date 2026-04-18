@@ -6,6 +6,8 @@ import java.util.List;
 import java.util.UUID;
 
 import entityClasses.User;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import entityClasses.Post;
 import entityClasses.Reply;
 
@@ -65,6 +67,8 @@ public class Database {
 		// for reply list data structure
 	private final List<Reply> replies = new ArrayList<>();
 	private long nextReplyId = 1;
+		// for thread list data structure
+	public static ObservableList<String> Thread_list = FXCollections.observableArrayList();
 	
 	/*******
 	 * <p> Method: Database </p>
@@ -94,7 +98,8 @@ public class Database {
 			statement = connection.createStatement(); 
 			// You can use this command to clear the database and restart from fresh.
 			//statement.execute("DROP ALL OBJECTS");
-
+			//statement.execute("DROP TABLE threads");
+			
 			createTables();  // Create the necessary tables if they don't exist
 		} catch (ClassNotFoundException e) {
 			System.err.println("JDBC Driver not found: " + e.getMessage());
@@ -102,6 +107,7 @@ public class Database {
 		try {
 			initPostList();
 			initReplyList();
+			initThreadList();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		};
@@ -190,6 +196,48 @@ public class Database {
 		resultSet.close();
 	};
 	
+	
+	/*******
+	 * <p> Method: initThreadList </p>
+	 * 
+	 * <p> Description: Used to load all post data from the sql database into the in memory data structure used for program functionality.
+	 * 
+	 * Called at the beginning of database connection before any user operations can take place to influence the data stored..</p>
+	 *
+	 * @throws SQLException if there is an issues accessing the user posts database.
+	 * 
+	 */
+		private void initThreadList() throws SQLException {
+				
+			
+				
+			System.out.println("Initializing Threads list");
+			String query = "SELECT * FROM threads";
+			
+			ResultSet resultSet = statement.executeQuery(query);
+			
+			ResultSetMetaData meta = resultSet.getMetaData();
+			
+			while (resultSet.next()) {
+			
+				for(int i = 0; i < meta.getColumnCount() ; i++) {
+			
+					Thread_list.add(resultSet.getString(i+1));
+			
+					System.out.println("Thread: " + resultSet.getString(i+1) + " added");
+				};
+				//System.out.println();
+			}
+			resultSet.close();
+				/*
+			createThread("general");
+			createThread("cse360");
+			createThread("my-posts");
+				*/
+		};
+	
+	
+	
 /*******
  * <p> Method: createTables </p>
  * 
@@ -246,9 +294,68 @@ public class Database {
                 + "authorUsername VARCHAR(255), "
                 + "contents VARCHAR(1000))";
         statement.execute(userReplyTable);
+        
+        // Create the thread table
+        String threadsTable = "CREATE TABLE IF NOT EXISTS threads ("
+                + "name VARCHAR(255))";
+        statement.execute(threadsTable);
 	    
 	}
 
+	
+/*******
+* <p> Method: insertThread(String name) </p>
+* 
+* <p> Description: Adds a new thread name to the list data structure and calls the insertThread(name) helper method. </p>
+* 
+* @param name specifies the name of the thread to create.
+*/	
+public boolean createThread(String name) {
+	if(!Thread_list.contains(name)) {
+		try {
+			insertThread(name);
+			Thread_list.add(name);
+			return true;
+		}
+		catch (SQLException e) {
+			e.printStackTrace();
+			return false;
+		}
+	}
+	else {
+		return false;
+	}
+	
+};
+			
+/*******
+* <p> Method: insertThread(String name) </p>
+* 
+* <p> Description: Creates a new row in the threads table using the name parameter. </p>
+* 
+* @throws SQLException when there is an issue creating the SQL command or executing it.
+* 
+* @param name specifies the name of the thread to create.
+*/	
+private void insertThread(String name) throws SQLException {
+	String insertPost = "INSERT INTO threads (name) VALUES (?)";
+	try (PreparedStatement pstmt = connection.prepareStatement(insertPost)) {
+		pstmt.setString(1, name);
+		pstmt.executeUpdate();
+	};
+};
+			
+ /*******
+ * <p> Method: getThreadsList </p>
+ * 
+ * <p> Description: Return the thread list data structure.</p>
+ * 
+ * @return Thread_list ObservableList of type String
+ * 
+ */
+	public ObservableList<String> getThreadsList() {
+		return this.Thread_list;
+	};	
 
 /*******
 * <p> Method: insertPost(User user, String postText) </p>

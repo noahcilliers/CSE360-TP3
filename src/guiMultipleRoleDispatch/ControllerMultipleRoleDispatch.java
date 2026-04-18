@@ -53,7 +53,9 @@ public class ControllerMultipleRoleDispatch {
 		
 		// Fetch the role from the SelectRole ComboBox
 		String role = guiMultipleRoleDispatch.ViewMultipleRoleDispatch.combobox_SelectRole.getValue();
-
+			// Set the user's chosen role so that the navigation buttons can send user back to the proper home page.
+		guiMultipleRoleDispatch.ViewMultipleRoleDispatch.theUser.chosenRole = role;
+		
 		// See if Admin
 		if (role.compareTo("Admin") == 0) {
 			

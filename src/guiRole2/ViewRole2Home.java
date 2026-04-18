@@ -4,6 +4,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextArea;
 import javafx.scene.layout.Pane;
 import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
@@ -57,7 +58,9 @@ public class ViewRole2Home {
 	// would contain the widgets needed for the user to play the assigned role.
 	protected static Button button_GeneralThread = new Button("General Thread");
 	protected static Button button_RequestsThread = new Button("Requests");
+	protected static Button create_Thread = new Button("Create Thread");
 	
+	protected static TextArea textArea_NewThread = new TextArea();
 	
 	// This is a separator and it is used to partition the GUI for various tasks
 	protected static Line line_Separator4 = new Line(20, 525, width-20,525);
@@ -164,14 +167,24 @@ public class ViewRole2Home {
 		button_UpdateThisUser.setOnAction((_) -> {ControllerRole2Home.performUpdate(); });
 		
 		// GUI Area 2
+		textArea_NewThread.setLayoutX(20);
+		textArea_NewThread.setLayoutY(435);
+		textArea_NewThread.setPrefWidth(width - 200);
+		textArea_NewThread.setPrefHeight(80);
+		
 		setupButtonUI(button_GeneralThread, "Dialog", 18, 250, Pos.CENTER, 20, 300);
 		button_GeneralThread.setOnAction((_) -> 
 		    { guiThread.ViewThread.displayThread(theStage, theUser); });
 		
 		
-		setupButtonUI(button_RequestsThread, "Dialog", 18, 250, Pos.CENTER, 20, 370);
+		setupButtonUI(button_RequestsThread, "Dialog", 18, 250, Pos.CENTER, 20, 350);
 		button_RequestsThread.setOnAction((_) -> 
 		    { guiRequests.ViewRequests.displayRequests(theStage, theUser); });
+		
+		// Button to create a new Thread from the name in a text box next to this button
+		setupButtonUI(create_Thread, "Dialog", 18, 250, Pos.CENTER, 20, 400);
+		create_Thread.setOnAction((_) -> 
+			{ ControllerRole2Home.addThread();});
 		
 		
 		
@@ -191,7 +204,7 @@ public class ViewRole2Home {
 		// Place all of the widget items into the Root Pane's list of children
         theRootPane.getChildren().addAll(
 			label_PageTitle, label_UserDetails, button_UpdateThisUser, line_Separator1,
-	        line_Separator4, button_Logout, button_Quit, button_GeneralThread, button_RequestsThread);
+	        line_Separator4, button_Logout, button_Quit, button_GeneralThread, button_RequestsThread, create_Thread, textArea_NewThread);
 	}
 	
 	

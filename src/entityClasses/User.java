@@ -28,7 +28,7 @@ public class User {
     private boolean adminRole;
     private boolean role1;
     private boolean role2;
-    
+    public String chosenRole = "NULL";
     
     /*****
      * <p> Method: User() </p>
@@ -80,6 +80,13 @@ public class User {
         this.adminRole = r1;
         this.role1 = r2;
         this.role2 = r3;
+        if(this.role1 && !this.role2) {
+        	this.chosenRole = "Role1";
+        	
+        }
+        else if (!this.role1 && this.role2) {
+        	this.chosenRole = "Role2";
+        };
     }
 
     
