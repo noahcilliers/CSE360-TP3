@@ -229,8 +229,9 @@ public class Database {
 				//System.out.println();
 			}
 			resultSet.close();
-				/*
+				
 			createThread("general");
+			/*
 			createThread("cse360");
 			createThread("my-posts");
 				*/
@@ -344,6 +345,47 @@ private void insertThread(String name) throws SQLException {
 		pstmt.executeUpdate();
 	};
 };
+
+
+public boolean deleteThread(String threadName) {
+    if (threadName == null || threadName.trim().isEmpty()) return false;
+
+    final String trimmedName = threadName.trim(); 
+
+    if (trimmedName.equalsIgnoreCase("general") ||
+        trimmedName.equalsIgnoreCase("requests")) {
+        return false;
+    }
+
+    try {
+        deletePostsForThreadFromDB(trimmedName);
+        deleteThreadFromDB(trimmedName);
+
+        postList.removeIf(p -> p.getThreadId().equals(trimmedName));
+        Thread_list.remove(trimmedName);
+
+        return true;
+    } catch (SQLException e) {
+        e.printStackTrace();
+        return false;
+    }
+}
+
+private void deleteThreadFromDB(String name) throws SQLException {
+    String sql = "DELETE FROM threads WHERE name = ?";
+    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        pstmt.setString(1, name);
+        pstmt.executeUpdate();
+    }
+}
+
+private void deletePostsForThreadFromDB(String threadName) throws SQLException {
+    String sql = "DELETE FROM userPosts WHERE thread = ?";
+    try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
+        pstmt.setString(1, threadName);
+        pstmt.executeUpdate();
+    }
+}
 			
  /*******
  * <p> Method: getThreadsList </p>

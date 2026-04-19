@@ -10,6 +10,7 @@ import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
 import database.Database;
+import javafx.scene.control.ComboBox;
 //import database.Database;
 import entityClasses.User;
 
@@ -59,6 +60,9 @@ public class ViewRole2Home {
 	protected static Button button_GeneralThread = new Button("General Thread");
 	protected static Button button_RequestsThread = new Button("Requests");
 	protected static Button create_Thread = new Button("Create Thread");
+	
+	protected static ComboBox<String> combo_DeleteThread = new ComboBox<>();
+	protected static Button delete_Thread = new Button("Delete Thread");
 	
 	protected static TextArea textArea_NewThread = new TextArea();
 	
@@ -128,6 +132,9 @@ public class ViewRole2Home {
 		applicationMain.FoundationsMain.activeHomePage = theRole;
 		
 		label_UserDetails.setText("User: " + theUser.getUserName());// Set the username
+		
+		combo_DeleteThread.setItems(theDatabase.getThreadsList()); // set any newly created threads to appear in the deletion combo box
+		combo_DeleteThread.getSelectionModel().clearSelection();
 
 		// Set the title for the window, display the page, and wait for the Admin to do something
 		theStage.setTitle("CSE 360 Foundations: Role2 Home Page");
@@ -186,6 +193,15 @@ public class ViewRole2Home {
 		create_Thread.setOnAction((_) -> 
 			{ ControllerRole2Home.addThread();});
 		
+		// Button to delete a thread that is selected from a combo box
+		
+		combo_DeleteThread.setLayoutX(580);
+		combo_DeleteThread.setLayoutY(400);
+		combo_DeleteThread.setPrefWidth(210);
+		combo_DeleteThread.setItems(theDatabase.getThreadsList());
+
+		setupButtonUI(delete_Thread, "Dialog", 18, 250, Pos.CENTER, 300, 400);
+		delete_Thread.setOnAction((_) -> { ControllerRole2Home.removeThread(); });
 		
 		
 		
@@ -204,7 +220,8 @@ public class ViewRole2Home {
 		// Place all of the widget items into the Root Pane's list of children
         theRootPane.getChildren().addAll(
 			label_PageTitle, label_UserDetails, button_UpdateThisUser, line_Separator1,
-	        line_Separator4, button_Logout, button_Quit, button_GeneralThread, button_RequestsThread, create_Thread, textArea_NewThread);
+	        line_Separator4, button_Logout, button_Quit, button_GeneralThread, 
+	        button_RequestsThread, create_Thread, textArea_NewThread, combo_DeleteThread, delete_Thread);
 	}
 	
 	

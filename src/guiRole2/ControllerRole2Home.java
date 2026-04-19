@@ -97,16 +97,39 @@ public class ControllerRole2Home {
 	
 	
 	/**********
-	 * <p> Method: addThread() </p>
+	 * <p> Method: removeThread() </p>
 	 * 
 	 * @param name name of the new thread to be removed.
 	 * 
 	 * <p> Description: This method removes a thread from the thread combobox. </p>
 	 * 
 	 */
-	protected static void removeThread(String name) {
-		System.out.println("removeThread not yet implimented");
-	};
+	protected static void removeThread() {
+	    String selectedThread = ViewRole2Home.combo_DeleteThread
+	            .getSelectionModel()
+	            .getSelectedItem();
+
+	    if (selectedThread == null || selectedThread.trim().isEmpty()) {
+	        Alert a = new Alert(AlertType.ERROR);
+	        a.setTitle("No Thread Selected");
+	        a.setContentText("Please select a thread to delete.");
+	        a.showAndWait();
+	        return;
+	    }
+
+	    boolean ret = theDatabase.deleteThread(selectedThread);
+
+	    if (ret) {
+	        ViewRole2Home.combo_DeleteThread.getSelectionModel().clearSelection();
+	        System.out.println("Thread: " + selectedThread + " deleted successfully");
+	    } else {
+	        Alert a = new Alert(AlertType.ERROR);
+	        a.setTitle("Delete Thread Failed");
+	        a.setHeaderText("Thread could not be deleted.");
+	        a.setContentText("The thread may be protected or may not exist.");
+	        a.showAndWait();
+	    }
+	}
 	
 	/**********
 	 * <p> Method: performUpdate() </p>
