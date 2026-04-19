@@ -131,6 +131,12 @@ public class ControllerRole2Home {
 	    }
 	}
 	
+	protected static void viewDirectMessages() {
+		// to do
+		System.out.println("Direct messages page not yet implimented");
+	};
+	
+	
 	/**********
 	 * <p> Method: performUpdate() </p>
 	 * 

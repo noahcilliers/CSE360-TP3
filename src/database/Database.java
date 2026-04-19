@@ -229,12 +229,13 @@ public class Database {
 				//System.out.println();
 			}
 			resultSet.close();
-				
+			/*	
 			createThread("general");
-			/*
+			
 			createThread("cse360");
 			createThread("my-posts");
 				*/
+				
 		};
 	
 	
