@@ -10,9 +10,9 @@ import javafx.scene.control.TextInputDialog;
 import java.util.Optional;
 
 /*******
- * <p> Title: ControllerThread Class </p>
+ * <p> Title: ControllerRequests Class </p>
  * 
- * <p> Description: This ControllerThread class represents the link between ViewThread, PostManager, and Database.</p>
+ * <p> Description: This ControllerRequests class represents the link between ViewRequests, PostManager, and Database.</p>
  * 
  * <p> Copyright: Noah Cilliers © 2026 </p>
  * 
