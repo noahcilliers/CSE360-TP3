@@ -26,14 +26,14 @@ import entityClasses.Post;
 import modelClasses.PostManager;
 
 /*******
- * <p> Title: GUIViewThreadPage Class. </p>
+ * <p> Title: GUIViewRequestsPage Class. </p>
  * 
  * <p> Description: The Java/FX-based ViewThread Page.  This class provides the JavaFX GUI widgets
  * that enable a student/staff to perform student/staff functions.  
  * 
  * The class has been written using a singleton design pattern and is the View portion of the 
  * Model, View, Controller pattern.  The pattern is designed that the all accesses to this page and
- * its functions starts by invoking the static method displayViewThread.  No other method should 
+ * its functions starts by invoking the static method displayViewRequests.  No other method should 
  * attempt to instantiate this class as that is controlled by displayViewThread.  It ensure that
  * only one instance of class is instantiated and that one is properly configured for each use.  
  * 
@@ -164,7 +164,7 @@ public class ViewRequests {
 	*/
 
 	/**********
-	 * <p> Method: displayThread(Stage ps, User user) </p>
+	 * <p> Method: displayRequests(Stage ps, User user) </p>
 	 * 
 	 * <p> Description: This method is the single entry point from outside this package to cause
 	 * the page to be displayed.
@@ -207,7 +207,7 @@ public class ViewRequests {
 	}
 	
 	/**********
-	 * <p> Method: ViewThread() </p>
+	 * <p> Method: ViewRequests() </p>
 	 * 
 	 * <p> Description: This method initializes all the elements of the graphical user interface.
 	 * This method determines the location, size, font, color, and change and event handlers for
