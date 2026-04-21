@@ -346,6 +346,17 @@ private void insertThread(String name) throws SQLException {
 	};
 };
 
+/*******
+* <p> Method: deleteThread(String threadName) </p>
+* 
+* <p> Description: will remove a thread from the Thread_list if the name matches with one of the threads in the list.
+* It will also call deletePostsForThreadFromDB to delete all the posts under the thread from the SQL and also deleteThreadFromDB to delete the thread from the SQL. </p>
+* 
+* @throws SQLException when there is an issue deleting the thread from Thread_list.
+* 
+* @param name specifies the name of the thread to delete.
+* @author Roberto Zozaya
+*/	
 
 public boolean deleteThread(String threadName) {
     if (threadName == null || threadName.trim().isEmpty()) return false;
@@ -371,6 +382,17 @@ public boolean deleteThread(String threadName) {
     }
 }
 
+/*******
+* <p> Method: deleteThreadFromDB(String name) </p>
+* 
+* <p> Description: Deletes the thread from the SQL database using a prepared statement.</p>
+* 
+* @throws SQLException when there is an issue deleting the thread from the SQL database.
+* 
+* @param name specifies the name of the thread to delete from the SQL database.
+* @author Roberto Zozaya
+*/	
+
 private void deleteThreadFromDB(String name) throws SQLException {
     String sql = "DELETE FROM threads WHERE name = ?";
     try (PreparedStatement pstmt = connection.prepareStatement(sql)) {
@@ -378,6 +400,17 @@ private void deleteThreadFromDB(String name) throws SQLException {
         pstmt.executeUpdate();
     }
 }
+
+/*******
+* <p> Method: deletePostsForThreadFromDB (String threadName)</p>
+* 
+* <p> Description: Deletes all the posts under a thread from the SQL database using a prepared statement.</p>
+* 
+* @throws SQLException when there is an issue deleting the posts under a thread from the SQL database.
+* 
+* @param threadName specifies the name of the thread to delete the posts from the SQL database.
+* @author Roberto Zozaya
+*/	
 
 private void deletePostsForThreadFromDB(String threadName) throws SQLException {
     String sql = "DELETE FROM userPosts WHERE thread = ?";
