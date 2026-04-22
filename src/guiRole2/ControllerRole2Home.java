@@ -99,9 +99,8 @@ public class ControllerRole2Home {
 	/**********
 	 * <p> Method: removeThread() </p>
 	 * 
-	 * @param name name of the new thread to be removed.
-	 * 
 	 * <p> Description: This method removes a thread from the thread combobox. </p>
+	 * 
 	 * 
 	 */
 	protected static void removeThread() {
