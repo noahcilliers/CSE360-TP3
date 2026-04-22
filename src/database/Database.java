@@ -362,10 +362,14 @@ private void insertThread(String name) throws SQLException {
 public boolean deleteThread(String threadName) {
     if (threadName == null || threadName.trim().isEmpty()) return false;
 
-    final String trimmedName = threadName.trim(); 
+    final String trimmedName = threadName.trim();
 
     if (trimmedName.equalsIgnoreCase("general") ||
         trimmedName.equalsIgnoreCase("requests")) {
+        return false;
+    }
+
+    if (!Thread_list.contains(trimmedName)) {
         return false;
     }
 
