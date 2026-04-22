@@ -3,6 +3,16 @@ package testingAutomation;
 import database.Database;
 import entityClasses.User;
 
+/*******
+ * <p> Title: ThreadDeletionTesting Class </p>
+ * 
+ * <p> Description: This class tests the functionality of the thread deletion function of the program. </p>
+ * 
+ * 
+ * @author Roberto zozaya
+ * 
+ * 
+ */
 public class ThreadDeletionTesting {
 
     private static int testsRun = 0;

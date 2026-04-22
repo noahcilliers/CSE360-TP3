@@ -38,7 +38,7 @@ import guiUserUpdate.ViewUserUpdate;
  * users. This Baeldung article provides insight into the issues: 
  *           https://www.baeldung.com/java-singleton</p>
  * 
- * <p> Copyright: Lynn Robert Carter © 2025 </p>
+ * <p> Copyright: Lynn Robert Carter Â© 2025 </p>
  * 
  * @author Lynn Robert Carter
  * 
@@ -103,6 +103,7 @@ public class ViewAdminHome {
 	protected static Button button_DeleteUser = new Button("Delete a User");
 	protected static Button button_ListUsers = new Button("List All Users");
 	protected static Button button_AddRemoveRoles = new Button("Add/Remove Roles");
+	protected static Button button_RequestsThread = new Button("Requests");
 	protected static Alert alertNotImplemented = new Alert(AlertType.INFORMATION);
 	protected static Alert alertListUsers = new Alert(Alert.AlertType.INFORMATION);
 	
@@ -245,6 +246,10 @@ public class ViewAdminHome {
 
 		setupButtonUI(button_SendInvitation, "Dialog", 16, 150, Pos.CENTER, 630, 205);
 		button_SendInvitation.setOnAction((_) -> {ControllerAdminHome.performInvitation(); });
+		
+		setupButtonUI(button_RequestsThread, "Dialog", 18, 150, Pos.CENTER, 630, 370);
+		button_RequestsThread.setOnAction((_) -> 
+		    { guiRequests.ViewRequests.displayRequests(theStage, theUser); });
 	
 		// GUI Area 4
 		setupButtonUI(button_ManageInvitations, "Dialog", 16, 250, Pos.CENTER, 20, 270);
@@ -288,7 +293,7 @@ public class ViewAdminHome {
     		button_AddRemoveRoles,
     		line_Separator4, 
     		button_Logout,
-    		button_Quit
+    		button_Quit, button_RequestsThread
     		);
 		
 		// With theRootPane set up with the common widgets, it is up to displayAdminHome to show

@@ -159,14 +159,15 @@ public class ControllerRequests {
 		 * 
 		 * 
 		 */
-    public static void goBack() {
-        // send them back to their role home page (Role1Home )
-    	//if staff 
-    	//if(database.getRole2()){
-        guiRole2.ViewRole2Home.displayRole2Home(ViewRequests.theStage, ViewRequests.theUser);
-        // }
-        // else go to admin home
-        // need to change this for threads too
+	 public static void goBack() {
+         // send them back to their role home page (Role1Home )
+        if (ViewRequests.theUser.getAdminRole()) {
+               guiAdminHome.ViewAdminHome.displayAdminHome(ViewRequests.theStage, ViewRequests.theUser);
+           } else if (ViewRequests.theUser.getNewRole1()) {
+               guiRole1.ViewRole1Home.displayRole1Home(ViewRequests.theStage, ViewRequests.theUser);
+           } else if (ViewRequests.theUser.getNewRole2()) {
+               guiRole2.ViewRole2Home.displayRole2Home(ViewRequests.theStage, ViewRequests.theUser);
+           }
     }
     
     /**
