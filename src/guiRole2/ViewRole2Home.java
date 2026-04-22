@@ -60,6 +60,7 @@ public class ViewRole2Home {
 	protected static Button button_GeneralThread = new Button("General Thread");
 	protected static Button button_RequestsThread = new Button("Requests");
 	protected static Button create_Thread = new Button("Create Thread");
+	protected static Button button_DirectMessages = new Button("Direct Messages");
 	
 	protected static ComboBox<String> combo_DeleteThread = new ComboBox<>();
 	protected static Button delete_Thread = new Button("Delete Thread");
@@ -203,6 +204,9 @@ public class ViewRole2Home {
 		setupButtonUI(delete_Thread, "Dialog", 18, 250, Pos.CENTER, 300, 400);
 		delete_Thread.setOnAction((_) -> { ControllerRole2Home.removeThread(); });
 		
+		// Button to travel to direct messages page
+		setupButtonUI(button_DirectMessages, "Dialog", 18, 250, Pos.CENTER, 300, 350);
+		button_DirectMessages.setOnAction((_) -> { guiDirectMessages.ViewDirectMessages.displayDirectMessages(theStage, theUser);  });
 		
 		
 			// This is a stub, so this area is empty
@@ -221,7 +225,7 @@ public class ViewRole2Home {
         theRootPane.getChildren().addAll(
 			label_PageTitle, label_UserDetails, button_UpdateThisUser, line_Separator1,
 	        line_Separator4, button_Logout, button_Quit, button_GeneralThread, 
-	        button_RequestsThread, create_Thread, textArea_NewThread, combo_DeleteThread, delete_Thread);
+	        button_RequestsThread, create_Thread, textArea_NewThread, combo_DeleteThread, delete_Thread, button_DirectMessages);
 	}
 	
 	

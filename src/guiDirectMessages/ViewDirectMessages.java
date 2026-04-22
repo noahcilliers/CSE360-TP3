@@ -1,4 +1,4 @@
-package guiRequests;
+package guiDirectMessages;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -26,14 +26,14 @@ import entityClasses.Post;
 import modelClasses.PostManager;
 
 /*******
- * <p> Title: GUIViewRequestsPage Class. </p>
+ * <p> Title: GUIViewThreadPage Class. </p>
  * 
  * <p> Description: The Java/FX-based ViewThread Page.  This class provides the JavaFX GUI widgets
  * that enable a student/staff to perform student/staff functions.  
  * 
  * The class has been written using a singleton design pattern and is the View portion of the 
  * Model, View, Controller pattern.  The pattern is designed that the all accesses to this page and
- * its functions starts by invoking the static method displayViewRequests.  No other method should 
+ * its functions starts by invoking the static method displayViewThread.  No other method should 
  * attempt to instantiate this class as that is controlled by displayViewThread.  It ensure that
  * only one instance of class is instantiated and that one is properly configured for each use.  
  * 
@@ -49,7 +49,7 @@ import modelClasses.PostManager;
  *  
  */
 
-public class ViewRequests {
+public class ViewDirectMessages {
 	
 	/*-*******************************************************************************************
 
@@ -73,7 +73,7 @@ public class ViewRequests {
 	protected static Button button_UpdateThisUser = new Button("Account Update");
 	
 	//Search area berto
-	protected static Label label_Search = new Label("Search posts:");
+	protected static Label label_Search = new Label("Search Messages:");
 	protected static TextField textField_Search = new TextField();
 	protected static Button button_Search = new Button("Search");
 	protected static Button button_ClearSearch = new Button("Clear");
@@ -90,15 +90,15 @@ public class ViewRequests {
 	
 	
 	// GUI Area 2: Compose
-		protected static Label label_NewPost = new Label("Write a post:");
+		protected static Label label_NewPost = new Label("Write a message:");
 		protected static TextArea textArea_NewPost = new TextArea();
 		protected static Button button_Post = new Button("Post");
-		protected static String currentThreadId = "requests";
+		protected static String currentThreadId = "Direct Messages";
 	
 		
 	
 	// GUI Area 3: Thread display
-	protected static Label label_ThreadTitle = new Label("Requests");
+	protected static Label label_ThreadTitle = new Label("Direct Messages");
 	protected static ListView<Post> listView_Posts = new ListView<>();
 	
 	///change thread button
@@ -143,7 +143,7 @@ public class ViewRequests {
 
 	
 	// These attributes are used to configure the page and populate it with this user's information
-	private static ViewRequests theView;		// Used to determine if instantiation of the class
+	private static ViewDirectMessages theView;		// Used to determine if instantiation of the class
 												// is needed
 
 	// Reference for the in-memory database so this package has access
@@ -164,7 +164,7 @@ public class ViewRequests {
 	*/
 
 	/**********
-	 * <p> Method: displayRequests(Stage ps, User user) </p>
+	 * <p> Method: displayThread(Stage ps, User user) </p>
 	 * 
 	 * <p> Description: This method is the single entry point from outside this package to cause
 	 * the page to be displayed.
@@ -184,7 +184,7 @@ public class ViewRequests {
 	 * @param user specifies the User for this GUI and it's methods
 	 * 
 	 */
-	public static void displayRequests(Stage ps, User user) {
+	public static void displayDirectMessages(Stage ps, User user) {
 		
 		// Establish the references to the GUI and the current user
 		theStage = ps;
@@ -192,7 +192,7 @@ public class ViewRequests {
 		
 		
 		// If not yet established, populate the static aspects of the GUI
-		if (theView == null) theView = new ViewRequests();		// Instantiate singleton if needed
+		if (theView == null) theView = new ViewDirectMessages();		// Instantiate singleton if needed
 		
 		
 		label_UserDetails.setText("User: " + theUser.getUserName());
@@ -201,13 +201,13 @@ public class ViewRequests {
 	    refreshPosts();
 				
 		// Set the title for the window, display the page, and wait for the Admin to do something
-		theStage.setTitle("Requests Thread");
+		theStage.setTitle("Direct Messages Thread");
 		theStage.setScene(theThreadScene);						// Set this page onto the stage
 		theStage.show();											// Display it to the user
 	}
 	
 	/**********
-	 * <p> Method: ViewRequests() </p>
+	 * <p> Method: ViewThread() </p>
 	 * 
 	 * <p> Description: This method initializes all the elements of the graphical user interface.
 	 * This method determines the location, size, font, color, and change and event handlers for
@@ -217,7 +217,7 @@ public class ViewRequests {
 	 * fields using the displayAdminHome method.</p>
 	 * 
 	 */
-	private ViewRequests() {
+	private ViewDirectMessages() {
 
 		// Create the Pane for the list of widgets and the Scene for the window
 		theRootPane = new Pane();
@@ -227,7 +227,7 @@ public class ViewRequests {
 		// Populate the window with the title and other common widgets and set their static state
 		
 		// GUI Area 1
-		label_PageTitle.setText("Requests");
+		label_PageTitle.setText("Direct Messages");
 		setupLabelUI(label_PageTitle, "Arial", 28, width, Pos.CENTER, 0, 5);
 
 		label_UserDetails.setText("User: " + theUser.getUserName());
@@ -263,10 +263,10 @@ public class ViewRequests {
 		 setupLabelUI(label_Search, "Arial", 16, width, Pos.BASELINE_LEFT, 20, 105);
 		 setupTextUI(textField_Search, "Dialog", 16, 250, Pos.BASELINE_LEFT, 130, 105, true);
 		 setupButtonUI(button_Search, "Dialog", 14, 100, Pos.CENTER, 400,100);
-		 button_Search.setOnAction((_) ->{ ControllerRequests.performSearch();});
+		 button_Search.setOnAction((_) ->{ ControllerDirectMessages.performSearch();});
 		 setupButtonUI(button_ClearSearch, "Dialog", 14, 100, Pos.CENTER, 510, 100);
-		 button_ClearSearch.setOnAction((_) -> { ControllerRequests.clearSearch(); });
-		 textField_Search.setOnAction((_) -> { ControllerRequests.performSearch(); });
+		 button_ClearSearch.setOnAction((_) -> { ControllerDirectMessages.clearSearch(); });
+		 textField_Search.setOnAction((_) -> { ControllerDirectMessages.performSearch(); });
 		 
 		/// GUI Area 3
 		
@@ -310,28 +310,28 @@ public class ViewRequests {
 		    textArea_NewPost.setPrefHeight(80);
 		    // post button
 		    setupButtonUI(button_Post, "Dialog", 18, 150, Pos.CENTER, width - 170, 440);
-		    button_Post.setOnAction((_) -> { ControllerRequests.performPost(); });
+		    button_Post.setOnAction((_) -> { ControllerDirectMessages.performPost(); });
 		    
 		    ///viewReplies button
 		    setupButtonUI(button_ViewRequest, "Dialog", 18, 150, Pos.CENTER, width - 450, 560);
-		    button_ViewRequest.setOnAction((_) -> { ControllerRequests.openReplies(); });
+		    button_ViewRequest.setOnAction((_) -> { ControllerDirectMessages.openReplies(); });
 		    
 		    ///delete post button
 		    setupButtonUI(button_DeletePost, "Dialog", 18, 150, Pos.CENTER, width - 170, 560);
-		    button_DeletePost.setOnAction((_) -> { ControllerRequests.deletePost(); });
+		    button_DeletePost.setOnAction((_) -> { ControllerDirectMessages.deletePost(); });
 		    
 		// Back button
 		setupButtonUI(button_Back, "Dialog", 18, 150, Pos.CENTER, 20, 560);
-		button_Back.setOnAction((_) -> { ControllerRequests.goBack(); });
+		button_Back.setOnAction((_) -> { ControllerDirectMessages.goBack(theUser); });
 		 
 		setupButtonUI(button_OpenRequest, "Dialog", 18, 150, Pos.CENTER, width - 620, 560);
-		button_OpenRequest.setOnAction((_) -> { ControllerRequests.openRequest(); });
+		button_OpenRequest.setOnAction((_) -> { ControllerDirectMessages.openRequest(); });
 
 		setupButtonUI(button_CloseRequest, "Dialog", 18, 150, Pos.CENTER, width - 170, 520);
-		button_CloseRequest.setOnAction((_) -> { ControllerRequests.closeRequest(); });
+		button_CloseRequest.setOnAction((_) -> { ControllerDirectMessages.closeRequest(); });
 
 		setupButtonUI(button_UpdateRequest, "Dialog", 18, 150, Pos.CENTER, width - 170, 480);
-		button_UpdateRequest.setOnAction((_) -> { ControllerRequests.updateRequest(); });
+		button_UpdateRequest.setOnAction((_) -> { ControllerDirectMessages.updateRequest(); });
 		// Place all of the widget items into the Root Pane's list of children
 		theRootPane.getChildren().addAll(
 			label_PageTitle, label_UserDetails, line_Separator1,
