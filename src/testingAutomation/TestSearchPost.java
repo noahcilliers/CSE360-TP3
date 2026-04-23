@@ -13,10 +13,16 @@ import modelClasses.PostManager;
  */
 public class TestSearchPost {
 	
-	/**
-	 * main, insert into data base the following post.
-	 *
+	/**********
+     * 
+	 * <p> Method: main(String[] args) </p>
+	 * 
+	 * <p> Description: main, insert into data base the following post.</p>
+	 * 
 	 * @author Berto Silvar
+	 * 
+	 * @param args array of strings to be used as arguments to the program
+	 * 
 	 */
     public static void main(String[] args) {
         Database database = new Database();
@@ -38,11 +44,17 @@ public class TestSearchPost {
         testSearchPostsNoMatches(postManager);
     }
     
-    /**
-     * TestSearchhPostbycontent, test the logic in the posts search feature.
-     *
-     * @author Berto Silvar
-     */
+    /**********
+     * 
+	 * <p> Method: testSearchPostsByContent(PostManager postManager) </p>
+	 * 
+	 * <p> Description: TestSearchhPostbycontent, test the logic in the posts search feature.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param postManager PostManager class instance to be used in this test case
+	 * 
+	 */
     private static void testSearchPostsByContent(PostManager postManager) {
         List<Post> results = postManager.searchPosts("homework");
         
@@ -54,11 +66,17 @@ public class TestSearchPost {
         }
     }
     
-    /**
-     * TestSearchhPostbyauthor, test the logic in the posts search feature.
-     *
-     * @author Berto Silvar
-     */
+    /**********
+     * 
+	 * <p> Method: testSearchPostsByAuthor(PostManager postManager) </p>
+	 * 
+	 * <p> Description: TestSearchhPostbyauthor, test the logic in the posts search feature.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param postManager PostManager class instance to be used in this test case
+	 * 
+	 */
     private static void testSearchPostsByAuthor(PostManager postManager) {
         List<Post> results = postManager.searchPosts("berto");
         
@@ -69,11 +87,17 @@ public class TestSearchPost {
         }
     }
     
-    /**
-     * TestSearchhPostbythreadid, test the logic in the posts search feature.
-     *
-     * @author Berto Silvar
-     */
+    /**********
+     * 
+	 * <p> Method: testSearchPostsByThreadId(PostManager postManager) </p>
+	 * 
+	 * <p> Description: TestSearchhPostbythreadid, test the logic in the posts search feature.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param postManager PostManager class instance to be used in this test case
+	 * 
+	 */
     private static void testSearchPostsByThreadId(PostManager postManager) {
         List<Post> results = postManager.searchPosts("general");
 
@@ -84,11 +108,18 @@ public class TestSearchPost {
         }
     }
     
-    /**
-     * TestSearchhPostbycaseinsensitive, test the logic in the posts search feature.
-     *
-     * @author Berto Silvar
-     */
+    
+    /**********
+     * 
+	 * <p> Method: testSearchPostsCaseInsensitive(PostManager postManager) </p>
+	 * 
+	 * <p> Description: TestSearchhPostbycaseinsensitive, test the logic in the posts search feature.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param postManager PostManager class instance to be used in this test case
+	 * 
+	 */
     private static void testSearchPostsCaseInsensitive(PostManager postManager) {
         List<Post> results = postManager.searchPosts("PROJECT");
 
@@ -100,11 +131,18 @@ public class TestSearchPost {
         }
     }
     
-    /**
-     * TestSearchhPostbyemptykeywordreturnall, test the logic in the posts search feature.
-     *
-     * @author Berto Silvar
-     */
+   
+    /**********
+     * 
+	 * <p> Method: testSearchPostsEmptyKeywordReturnsAll(PostManager postManager) </p>
+	 * 
+	 * <p> Description: TestSearchhPostbyemptykeywordreturnall, test the logic in the posts search feature.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param postManager PostManager class instance to be used in this test case
+	 * 
+	 */
     private static void testSearchPostsEmptyKeywordReturnsAll(PostManager postManager) {
         List<Post> results = postManager.searchPosts("");
 
@@ -114,11 +152,18 @@ public class TestSearchPost {
             System.out.println("FAIL: logic error");
         }
     }
-    /**
-     * TestSearchhPostbynomatches, test the logic in the posts search feature.
-     *
-     * @author Berto Silvar
-     */
+    
+    /**********
+     * 
+	 * <p> Method: testSearchPostsNoMatches(PostManager postManager) </p>
+	 * 
+	 * <p> Description: TestSearchhPostbynomatches, test the logic in the posts search feature.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param postManager PostManager class instance to be used in this test case
+	 * 
+	 */
     private static void testSearchPostsNoMatches(PostManager postManager) {
         List<Post> results = postManager.searchPosts("zzzzz");
 

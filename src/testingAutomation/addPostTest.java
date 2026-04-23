@@ -27,6 +27,23 @@ import modelClasses.PostManager;
 
 public class addPostTest {
 
+	
+	/**********
+     * 
+	 * <p> Method: performTestCase(int testCase, Post p, boolean expectedPass) </p>
+	 * 
+	 * <p> Description: Public method to perform a test case on a post instance</p>
+	 * 
+	 * @author Noah Cilliers
+	 * 
+	 * @param testCase number to identify this test case against others during testing
+	 * 
+	 * @param p Post class instance
+	 * 
+	 * @param expectedPass boolean that tracks weather this test is expected to fail or succeed
+	 * 
+	 * 
+	 */
 	public static void performTestCase(int testCase, Post p, boolean expectedPass) {
 	    Database database = new Database();
 
@@ -72,6 +89,19 @@ public class addPostTest {
 	    }
 	}
 
+	
+	/**********
+     * 
+	 * <p> Method: main(String[] args) </p>
+	 * 
+	 * <p> Description: main method of the Post adding testing suite </p>
+	 * 
+	 * @author Noah Cilliers
+	 * 
+	 * @param args array of strings to be used as arguments to the program
+	 * 
+	 * 
+	 */
 	public static void main(String[] args) {
 		// Test Case 1: Valid post with normal content
 		Post p1 = new Post(0, "general", "testUser", "Hello, this is a test post!");

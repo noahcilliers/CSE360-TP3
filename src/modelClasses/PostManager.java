@@ -33,11 +33,12 @@ public class PostManager {
 	//methods
 	
 	/**********
-	 * <p> 
 	 * 
-	 * Title: setCurrentThread() Method. </p>
+	 * <p> Method: setCurrentThread(String threadId) </p>
 	 * 
 	 * <p> Description: Public method sets the attribute current thead when changing threads</p>
+	 * 
+	 * @param threadId name of the thread to set 
 	 * 
 	 * @author Noah Cilliers
 	 * 
@@ -49,9 +50,8 @@ public class PostManager {
 	}
    
 	/**********
-	 * <p> 
 	 * 
-	 * Title: refreshFromDataBase() Method. </p>
+	 * <p> Method: refreshFromDatabase() </p>
 	 * 
 	 * <p> Description: Public method refreshes the list of posts form database</p>
 	 * 
@@ -70,13 +70,20 @@ public class PostManager {
     }
 	
 	/**********
-	 * <p> 
 	 * 
-	 * Title: addPost() Method. </p>
+	 * <p> Method:  addPost(String threadId, String authorUsername, String content) </p>
 	 * 
 	 * <p> Description: Sends the post to database and then refreshes from the new database list</p>
 	 * 
+	 * @param threadId name of the thread to add the post to
+	 * 
+	 * @param authorUsername username of the author of the post to add
+	 * 
+	 * @param content text content of the post to add
+	 * 
 	 * @author Noah Cilliers
+	 * 
+	 * @return ok boolean to see if the post was added successfully
 	 * 
 	 * 
 	 */
@@ -114,20 +121,36 @@ public class PostManager {
 	    return ok;
 	}
 	
-
+	
+	/**********
+	 * 
+	 * <p> Method: getAllPosts() </p>
+	 * 
+	 * <p> Description: Public method gets the runtime data structure storing the system's posts </p>
+	 * 
+	 * @author Noah Cilliers
+	 * 
+	 * 
+	 * @return allPosts data structure that stores all posts
+	 * 
+	 */
+	
     public List<Post> getAllPosts() {
         return new ArrayList<>(allPosts);
     }
     
     /**********
-	 * <p> 
-	 * 
-	 * Title: softDeletePost Method. </p>
+     * 
+     * 
+	 * <p> Method: softDeletePost(long postId) </p>
 	 * 
 	 * <p> Description: Public method sends the post to database to be modified</p>
 	 * 
+	 * @param postId number used to identity the post to delete
+	 * 
 	 * @author Noah Cilliers
 	 * 
+	 * @return ok boolean to see if the post was deleted successfully
 	 * 
 	 */
     public boolean softDeletePost(long postId) {
@@ -137,13 +160,16 @@ public class PostManager {
     }
 
     /**********
-	 * <p> 
-	 * 
-	 * Title: searchPosts Method. </p>
+     * 
+	 * <p> Method: searchPosts(String keyword) </p>
 	 * 
 	 * <p> Description: Public method searches contents, author, and theard ID</p>
 	 * 
+	 * @param keyword String input given by the user to compare to post contents for the purposes of searching the list of posts
+	 * 
 	 * @author berto silvar
+	 * 
+	 * @return results list data structure storing all posts that match give keyword
 	 * 
 	 * 
 	 */
@@ -171,9 +197,14 @@ public class PostManager {
     }
     
     /**
-     * Title: getLatestPostId, gets the latest postId
+     * <p> Method: getLatestPostId() <p>
+     * 
+     * <p> Description: getLatestPostId, gets the latest postId <p>
+     * 
      * @author Berto
-     * @return
+     * 
+     * @return maxId The latests post made in the system's postId number
+     * 
      */
     private long getLatestPostId() {
     	long maxId = -1;
@@ -194,10 +225,17 @@ public class PostManager {
     }
     
     /**
-     * Title: closePost, sets a requests to closed
+     * 
+     * <p> Method: closePost(long postId) <p>
+     * 
+     * <p> Description: closePost, sets a requests to closed <p>
+     * 
      * @author Berto
-     * @param postId
-     * @return
+     * 
+     * @param postId number used to identify post to close
+     * 
+     * @return ok boolean to see if the post closed successfully
+     * 
      */
     public boolean closePost(long postId) {
     	boolean ok = database.setPostStatus(postId, "CLOSED");
@@ -207,11 +245,18 @@ public class PostManager {
     	return ok;
     }
     
+    
     /**
-     * Title: openPost, sets a post to open
+     * <p> Method: openPost(long postId) <p>
+     * 
+     * <p> Description: openPost, sets a post to open <p>
+     * 
      * @author Berto
-     * @param postId
-     * @return
+     * 
+     * @param postId number used to identify post to open
+     * 
+     * @return ok boolean to see if the post opened successfully
+     *
      */
     public boolean openPost(long postId) {
     	boolean ok = database.setPostStatus(postId, "OPEN");
@@ -222,11 +267,17 @@ public class PostManager {
     }
     
     /**
-     * Title: editPost, updates a post with the new body
+     * <p> Method: editPost(long postId, String newContent) <p>
+     * 
+     * <p> Description: editPost, updates a post with the new body <p>
+     * 
      * @author Berto
-     * @param postId
-     * @param newContent
-     * @return
+     * 
+     * @param postId number used to identify post to edit
+     * 
+     * @param newContent new text of post
+     * 
+     * @return ok boolean to see if the post edited successfully
      */
     public boolean editPost(long postId, String newContent) {
     	boolean ok = database.editPost(postId, newContent);
