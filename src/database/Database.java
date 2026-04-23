@@ -352,10 +352,10 @@ private void insertThread(String name) throws SQLException {
 * <p> Description: will remove a thread from the Thread_list if the name matches with one of the threads in the list.
 * It will also call deletePostsForThreadFromDB to delete all the posts under the thread from the SQL and also deleteThreadFromDB to delete the thread from the SQL. </p>
 * 
-* @throws SQLException when there is an issue deleting the thread from Thread_list.
 * 
-* @param name specifies the name of the thread to delete.
-* @author Roberto Zozaya
+* 
+* @param threadName specifies the name of the thread to delete.
+* 
 */	
 
 public boolean deleteThread(String threadName) {
@@ -394,7 +394,7 @@ public boolean deleteThread(String threadName) {
 * @throws SQLException when there is an issue deleting the thread from the SQL database.
 * 
 * @param name specifies the name of the thread to delete from the SQL database.
-* @author Roberto Zozaya
+* 
 */	
 
 private void deleteThreadFromDB(String name) throws SQLException {
@@ -413,7 +413,7 @@ private void deleteThreadFromDB(String name) throws SQLException {
 * @throws SQLException when there is an issue deleting the posts under a thread from the SQL database.
 * 
 * @param threadName specifies the name of the thread to delete the posts from the SQL database.
-* @author Roberto Zozaya
+* 
 */	
 
 private void deletePostsForThreadFromDB(String threadName) throws SQLException {
@@ -490,7 +490,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 * 
 * @throws SQLException when there is an issue creating the SQL command or executing it.
 * 
-* @param threadId specifies the name of the thread to record a post for.
+* @param parentPostId specifies the name of the post to record a reply for.
 * 
 * @param authorUsername name of the user who created a new post.
 * 
@@ -576,7 +576,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * 
 	 * <p> Description: Public method creates a post and adds it to the list</p>
 	 * 
-	 * @author Noah Cilliers
+	 * Noah Cilliers
 	 * 
 	 * 
 	 */
@@ -610,7 +610,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	
 	/**
 	 * Title: updatePostsContentInDB, updates the body of a requests
-	 * @author Berto
+	 * 
 	 * @param postId
 	 * @param newContent
 	 * @throws SQLException
@@ -630,7 +630,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * @param postId
 	 * @param newContent
 	 * @return
-	 * @author berto
+	 * 
 	 */
 	public boolean editPost(long postId, String newContent) {
 		if(newContent == null || newContent.trim().isEmpty()) {
@@ -656,7 +656,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	
 	/**
 	 * Title: updatePostStatusInDB, update the status in the Database
-	 * @author Berto
+	 * 
 	 * @param postId
 	 * @param status
 	 * @throws SQLException
@@ -672,7 +672,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	
 	/**
 	 * Title: setPostStatus, sets the post status at the start
-	 * @author Berto
+	 * 
 	 * @param postId
 	 * @param status
 	 * @return
@@ -704,7 +704,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * 
 	 * <p> Description: Public method gets all the posts under a certain thread id</p>
 	 * 
-	 * @author Noah Cilliers
+	 * 
 	 * 
 	 * 
 	 */
@@ -725,7 +725,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * 
 	 * <p> Description: Public method gets all the posts under a certain username</p>
 	 * 
-	 * @author Noah Cilliers
+	 * 
 	 * 
 	 * 
 	 */
@@ -749,7 +749,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * 
 	 * <p> Description: Public method changes the contents and author of a post</p>
 	 * 
-	 * @author Noah Cilliers
+	 * 
 	 * 
 	 * 
 	 */
@@ -790,7 +790,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * 
 	 * <p> Description: Public method creates a reply and adds it to the list</p>
 	 * 
-	 * @author Noah Cilliers
+	 * 
 	 * 
 	 * 
 	 */
@@ -814,7 +814,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * 
 	 * <p> Description: Public method changes the contents and author of a reply</p>
 	 * 
-	 * @author Noah Cilliers
+	 * 
 	 * 
 	 * 
 	 */
@@ -842,7 +842,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * 
 	 * <p> Description: Public method gets all the replies under a certain postID</p>
 	 * 
-	 * @author Noah Cilliers
+	 * 
 	 * 
 	 * 
 	 */
@@ -862,7 +862,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * 
 	 * <p> Description: Public method returns the number of replies for a post</p>
 	 * 
-	 * @author Noah Cilliers
+	 * 
 	 * 
 	 * 
 	 */
@@ -887,7 +887,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * @param postId
 	 * @param user
 	 * 
-	 * @author Roberto Zozaya
+	 * 
 	 */
 	
 	public void markAllRepliesAsRead(long postId, User user) {
@@ -923,7 +923,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * @param user
 	 * @return
 	 * 
-	 * @author Roberto Zozaya
+	 * 
 	 */
 	public int getReadReplyCountForPost(long postId, User user) {
 	    int count = 0;
@@ -951,7 +951,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
 	 * @param replyId
 	 * @return
 	 * 
-	 * @author Roberto Zozaya
+	 * 
 	 */
 	
 	public boolean hasUserReadReply(String userName, long replyId) {
@@ -1050,7 +1050,7 @@ private void deletePostsForThreadFromDB(String threadName) throws SQLException {
  *  <p> Method: List getUserList() </p>
  *  
  *  <p> Description: Generate an List of Strings, one for each user in the database,
- *  starting with <Select User> at the start of the list. </p>
+ *  starting with Select User at the start of the list. </p>
  *  
  *  @return a list of userNames found in the database.
  */
