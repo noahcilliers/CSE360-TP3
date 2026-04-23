@@ -111,7 +111,7 @@ public class ReplyManager {
     /**********
 	 * <p> 
 	 * 
-	 * Title: searchPosts Method. </p>
+	 * Title: searchReplies Method. </p>
 	 * 
 	 * <p> Description: Public method searches contents, author, and theard ID</p>
 	 * 
@@ -119,23 +119,22 @@ public class ReplyManager {
 	 * 
 	 * 
 	 */
-    public List<Post> searchPosts(String keyword){
+    public List<Reply> searchReplies(long postID,String keyword){
     	if(keyword == null || keyword.trim().isEmpty())
     	{
-    		return getAllPosts();
+    		return getRepliesForPost(postID);
     	}
     	
     	String lowerKeyword = keyword.toLowerCase();
-    	List<Post> results = new ArrayList<>();
+    	List<Reply> results = new ArrayList<>();
     	
-    	for (Post p : allPosts)
+    	for (Reply r : allReplies)
     	{
-    		if (p.getContent().toLowerCase().contains(lowerKeyword) || 
-    				p.getAuthorUsername().toLowerCase().contains(lowerKeyword) ||
-    				p.getThreadId().toLowerCase().contains(lowerKeyword) ||
-    				p.getStatus().toLowerCase().contains(lowerKeyword))
-    		{
-    			results.add(p);
+    		if(r.getParentPostId() == postID) {
+    			if(r.getContent().toLowerCase().contains(lowerKeyword) ||
+    					r.getAuthorUsername().toLowerCase().contains(lowerKeyword)) {
+    				results.add(r);
+    			}
     		}
     	}
     	
