@@ -14,9 +14,16 @@ import modelClasses.ReplyManager;
 public class TestSearchReply {
 	
 	/**
-	 * main, insert replies to the data base.
+	 * 
+	 * <p> Method: main(String[] args) <p>
+	 * 
+	 * <p> Description: main function of the Reply Search testing suite. In this function we will Insert replies into the database, 
+	 * create a new ReplyManager, run test cases<p>
 	 *
 	 * @author Berto Silvar
+	 * 
+	 * @param args String array of arguments to give the program
+	 * 
 	 */
     public static void main(String[] args) {
         Database database = new Database();
@@ -39,9 +46,13 @@ public class TestSearchReply {
     }
     
     /**
-     * TestSearchhreplybycontent, test the logic in the posts search feature.
+     * <p> Method: testSearchRepliesByContent(ReplyManager replyManager)<p>
+     * <p> Description: TestSearchhreplybycontent, test the logic in the posts search feature. <p>
      *
      * @author Berto Silvar
+     * 
+     * @param replyManager reference to the ReplyManager class instance being used for testing
+     *
      */
     private static void testSearchRepliesByContent(ReplyManager replyManager) {
         List<Reply> results = replyManager.searchReplies(1, "homework");
@@ -55,9 +66,14 @@ public class TestSearchReply {
     }
     
     /**
-     * TestSearchhreplybycontent, test the logic in the posts search feature.
+     * <p> Method: testSearchRepliesByAuthor(ReplyManager replyManager)<p>
+     * 
+     * <p> Description: TestSearchhreplybycontent, test the logic in the posts search feature. <p>
      *
      * @author Berto Silvar
+     * 
+     * @param replyManager reference to the ReplyManager class instance being used for testing 
+     * 
      */
     private static void testSearchRepliesByAuthor(ReplyManager replyManager) {
         List<Reply> results = replyManager.searchReplies(1, "berto");
@@ -70,9 +86,14 @@ public class TestSearchReply {
     }
     
     /**
-     * TestSearchhreplybycontent, test the logic in the posts search feature.
+     * <p> Method: testSearchRepliesIgnoresOtherPosts(ReplyManager replyManager) <p>
+     * 
+     * <p> Description: TestSearchhreplybycontent, test the logic in the posts search feature. <p>
      *
      * @author Berto Silvar
+     * 
+     * @param replyManager reference to the ReplyManager class instance being used for testing
+     * 
      */
     private static void testSearchRepliesIgnoresOtherPosts(ReplyManager replyManager) {
         List<Reply> results = replyManager.searchReplies(1, "maria");
@@ -85,9 +106,14 @@ public class TestSearchReply {
     }
     
     /**
-     * TestSearchhreplybycontent, test the logic in the posts search feature.
+     * <p> Method: testSearchRepliesCaseInsensitive(ReplyManager replyManager) <p>
+     * 
+     * <p> Description: TestSearchhreplybycontent, test the logic in the posts search feature. <p>
      *
      * @author Berto Silvar
+     * 
+     * @param replyManager reference to the ReplyManager class instance being used for testing
+     * 
      */
     private static void testSearchRepliesCaseInsensitive(ReplyManager replyManager) {
         List<Reply> results = replyManager.searchReplies(1, "PROJECT");
@@ -101,9 +127,14 @@ public class TestSearchReply {
     }
     
     /**
-     * TestSearchhreplybycontent, test the logic in the posts search feature.
+     * <p> Method: testSearchRepliesEmptyKeywordReturnsAllRepliesForPost(ReplyManager replyManager) <P>
+     * 
+     * <p> Description: TestSearchhreplybycontent, test the logic in the posts search feature. <P>
      *
      * @author Berto Silvar
+     * 
+     * @param replyManager reference to the ReplyManager class instance being used for testing
+     * 
      */
     private static void testSearchRepliesEmptyKeywordReturnsAllRepliesForPost(ReplyManager replyManager) {
         List<Reply> results = replyManager.searchReplies(1, "");
@@ -116,9 +147,14 @@ public class TestSearchReply {
     }
     
     /**
-     * TestSearchhreplybycontent, test the logic in the posts search feature.
+     * <p> Method: testSearchRepliesNoMatches(ReplyManager replyManager) <P>
+     * 
+     * <p> Description: TestSearchhreplybycontent, test the logic in the posts search feature. <P>
      *
      * @author Berto Silvar
+     * 
+     * @param replyManager reference to the ReplyManager class instance being used for testing
+     * 
      */
     private static void testSearchRepliesNoMatches(ReplyManager replyManager) {
         List<Reply> results = replyManager.searchReplies(1, "zzzzz");

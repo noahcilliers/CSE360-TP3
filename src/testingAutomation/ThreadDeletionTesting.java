@@ -1,5 +1,7 @@
 package testingAutomation;
 
+import java.sql.SQLException;
+
 import database.Database;
 import entityClasses.User;
 
@@ -18,6 +20,19 @@ public class ThreadDeletionTesting {
     private static int testsRun = 0;
     private static int testsPassed = 0;
 
+    
+    /**
+	 * 
+	 * <p> Method: main(String[] args) <p>
+	 * 
+	 * <p> Description: main function of the Thread Deletion testing suite. In this function we will connect to the database, create a new 
+	 * user, run test cases, then print output<p>
+	 *
+	 * @author Roberto zozaya
+	 * 
+	 * @param args String array of arguments to give the program
+	 * 
+	 */
     public static void main(String[] args) {
         Database db = new Database();
 
@@ -54,7 +69,22 @@ public class ThreadDeletionTesting {
             db.closeConnection();
         }
     }
-
+    
+    /**
+	 * 
+	 * <p> Method: runThreadDeletionTests(Database db, User user) <p>
+	 * 
+	 * <p> Description: wrapper function to run all Thread Deletion test cases<p>
+	 *
+	 * @author Roberto zozaya
+	 * 
+	 * @throws SQLException if there is an issues accessing the user posts database.
+	 * 
+	 * @param db Database class instance to be used in this test case
+	 * 
+	 * @param user User class instance to be used in this test case
+	 * 
+	 */
     private static void runThreadDeletionTests(Database db, User user) throws Exception {
         String threadId = "DeleteTest";
         String post1 = "First post in delete test thread";
@@ -104,7 +134,22 @@ public class ThreadDeletionTesting {
         boolean deleteBlank = db.deleteThread("   ");
         assertTrue("Deleting blank thread name should fail", !deleteBlank);
     }
-
+    
+    /**
+   	 * 
+   	 * <p> Method: assertEquals(String testName, int expected, int actual) <p>
+   	 * 
+   	 * <p> Description: assert function to test if the actual value equals the expected value<p>
+   	 *
+   	 * @author Roberto zozaya
+   	 * 
+   	 * @param testName name of the test case
+   	 * 
+   	 * @param expected expected value of the test case
+   	 * 
+   	 * @param actual actual value of the test case
+   	 * 
+   	 */
     private static void assertEquals(String testName, int expected, int actual) {
         testsRun++;
         if (expected == actual) {
@@ -116,7 +161,21 @@ public class ThreadDeletionTesting {
                     + ", actual: " + actual);
         }
     }
-
+    
+    /**
+   	 * 
+   	 * <p> Method: assertTrue(String testName, boolean condition) <p>
+   	 * 
+   	 * <p> Description: assert function to test if the test passes the condition or not<p>
+   	 *
+   	 * @author Roberto zozaya
+   	 * 
+   	 * @param testName name of the test case
+   	 * 
+   	 * @param condition expected boolean value of the test case
+   	 * 
+   	 * 
+   	 */
     private static void assertTrue(String testName, boolean condition) {
         testsRun++;
         if (condition) {

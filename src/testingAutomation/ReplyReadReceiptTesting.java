@@ -9,6 +9,18 @@ public class ReplyReadReceiptTesting {
     private static int testsRun = 0;
     private static int testsPassed = 0;
 
+    /**********
+     * 
+	 * <p> Method: main(String[] args) </p>
+	 * 
+	 * <p> Description: main method of the read replies receipts testing suite </p>
+	 * 
+	 * @author Noah Cilliers
+	 * 
+	 * @param args array of strings to be used as arguments to the program
+	 * 
+	 * 
+	 */
     public static void main(String[] args) {
         Database db = new Database();
 
@@ -51,6 +63,21 @@ public class ReplyReadReceiptTesting {
         }
     }
 
+    /**********
+     * 
+	 * <p> Method: runReplyReadReceiptTests(Database db, User user) </p>
+	 * 
+	 * <p> Description: Public method to perform a test case on a post instance</p>
+	 * 
+	 * @author Noah Cilliers
+	 * 
+	 * @param db Database class instance to be used in testing
+	 * 
+	 * @param user User class instance to be used in testing
+	 * 
+	 * 
+	 * 
+	 */
     private static void runReplyReadReceiptTests(Database db, User user) throws Exception
     {
         String threadId = "TestThread";
@@ -104,7 +131,22 @@ public class ReplyReadReceiptTesting {
         assertEquals("After re-marking, all 3 replies should be read",
                 3, db.getReadReplyCountForPost(postId, user));
     }
-
+    
+    /**********
+     * 
+	 * <p> Method: assertEquals(String testName, int expected, int actual) </p>
+	 * 
+	 * <p> Description: Public method to perform a test case on a post instance</p>
+	 * 
+	 * @author Noah Cilliers
+	 * 
+	 * @param testName Name of the test being run for the purpose of identifying it against other tests being run
+	 * 
+	 * @param expected expected value of the test case
+	 * 
+	 * @param actual actual value of the test case
+	 * 
+	 */
     private static void assertEquals(String testName, int expected, int actual) {
         testsRun++;
         if (expected == actual) {
@@ -117,6 +159,21 @@ public class ReplyReadReceiptTesting {
         }
     }
 
+    
+    /**********
+     * 
+	 * <p> Method: assertTrue(String testName, boolean condition) </p>
+	 * 
+	 * <p> Description: Public method to perform a test case on a post instance</p>
+	 * 
+	 * @author Noah Cilliers
+	 * 
+	 * @param testName Name of the test being run for the purpose of identifying it against other tests being run
+	 * 
+	 * @param condition expected boolean value of the test case
+	 * 
+	 * 
+	 */
     private static void assertTrue(String testName, boolean condition) {
         testsRun++;
         if (condition) {

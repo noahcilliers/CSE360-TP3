@@ -14,11 +14,18 @@ import java.util.List;
  */
 public class TestRequest {
 
-    /**
-     * main, seeds the requests thread and runs all test cases.
-     *
-     * @author Berto Silvar
-     */
+	/**********
+     * 
+	 * <p> Method: main(String[] args) </p>
+	 * 
+	 * <p> Description: main, seeds the requests thread and runs all test cases.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param args array of strings to be used as arguments to the program
+	 * 
+	 * 
+	 */
     public static void main(String[] args) {
         Database database = new Database();
 
@@ -49,11 +56,19 @@ public class TestRequest {
         database.closeConnection();
     }
 
-    /**
-     * testCreateRequest, tests that a new request is stored with status OPEN.
-     *
-     * @author Berto Silvar
-     */
+    /**********
+     * 
+	 * <p> Method: testCreateRequest(Database database, PostManager postManager) </p>
+	 * 
+	 * <p> Description: testCreateRequest, tests that a new request is stored with status OPEN.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param database database instance to be used for this test case
+	 * 
+	 * @param postManager PostManager class instance to be used for this test case
+	 * 
+	 */
     private static void testCreateRequest(Database database, PostManager postManager) {
         List<Post> posts = database.getPostsForThread("requests");
         Post p = null;
@@ -83,11 +98,20 @@ public class TestRequest {
         }
     }
 
-    /**
-     * testCloseRequest, tests that closePost sets the request status to CLOSED.
-     *
-     * @author Berto Silvar
-     */
+    
+    /**********
+     * 
+	 * <p> Method: testCloseRequest(Database database, PostManager postManager) </p>
+	 * 
+	 * <p> Description: testCloseRequest, tests that closePost sets the request status to CLOSED.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param database database instance to be used for this test case
+	 * 
+	 * @param postManager PostManager class instance to be used for this test case
+	 * 
+	 */
     private static void testCloseRequest(Database database, PostManager postManager) {
         List<Post> posts = database.getPostsForThread("requests");
         Post p = null;
@@ -121,11 +145,19 @@ public class TestRequest {
         }
     }
 
-    /**
-     * testReopenRequest, tests that openPost on a CLOSED request sets status back to OPEN.
-     *
-     * @author Berto Silvar
-     */
+    /**********
+     * 
+	 * <p> Method: testReopenRequest(Database database, PostManager postManager) </p>
+	 * 
+	 * <p> Description: testReopenRequest, tests that openPost on a CLOSED request sets status back to OPEN.</p>
+	 * 
+	 * @author Berto Silvar
+	 * 
+	 * @param database database instance to be used for this test case
+	 * 
+	 * @param postManager PostManager class instance to be used for this test case
+	 * 
+	 */
     private static void testReopenRequest(Database database, PostManager postManager) {
         List<Post> posts = database.getPostsForThread("requests");
         Post p = null;
