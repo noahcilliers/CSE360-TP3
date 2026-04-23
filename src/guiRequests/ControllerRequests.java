@@ -159,16 +159,17 @@ public class ControllerRequests {
 		 * 
 		 * 
 		 */
-	 public static void goBack() {
-         // send them back to their role home page (Role1Home )
-        if (ViewRequests.theUser.getAdminRole()) {
-               guiAdminHome.ViewAdminHome.displayAdminHome(ViewRequests.theStage, ViewRequests.theUser);
-           } else if (ViewRequests.theUser.getNewRole1()) {
-               guiRole1.ViewRole1Home.displayRole1Home(ViewRequests.theStage, ViewRequests.theUser);
-           } else if (ViewRequests.theUser.getNewRole2()) {
-               guiRole2.ViewRole2Home.displayRole2Home(ViewRequests.theStage, ViewRequests.theUser);
-           }
-    }
+     public static void goBack() {
+         if (ViewRequests.theUser.chosenRole.equals("Role1")) {
+             guiRole1.ViewRole1Home.displayRole1Home(ViewRequests.theStage, ViewRequests.theUser);
+         } else if (ViewRequests.theUser.chosenRole.equals("Role2")) {
+             guiRole2.ViewRole2Home.displayRole2Home(ViewRequests.theStage, ViewRequests.theUser);
+         } else if (ViewRequests.theUser.chosenRole.equals("Admin")) {
+             guiAdminHome.ViewAdminHome.displayAdminHome(ViewRequests.theStage, ViewRequests.theUser);
+         } else {
+             System.out.println("NO ROLE CHOSEN");
+         }
+     }
     
     /**
      * Title: performSearch, performs the search
