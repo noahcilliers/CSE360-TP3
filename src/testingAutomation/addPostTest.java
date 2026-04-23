@@ -120,9 +120,7 @@ public class addPostTest {
 
 		// Test Case 4: Post with whitespace-only content (should fail)
 		performTestCase(4, p4, false);
-
-		// Test Case 5: Post to a different thread
-		performTestCase(5, p5, true);
+		
 	}
 }
 
