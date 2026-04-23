@@ -36,9 +36,9 @@ public class TestRequest {
         postManager.setCurrentThread("requests");
 
         // seed test data
-        postManager.addPost("requests", "student1", "How do I submit Assignment 3?");
-        postManager.addPost("requests", "student2", "Close-test-request");
-        postManager.addPost("requests", "student3", "Reopen-test-request");
+        postManager.addPost("requests", "staff1", "How do I submit Assignment 3?");
+        postManager.addPost("requests", "staff2", "Close-test-request");
+        postManager.addPost("requests", "staff3", "Reopen-test-request");
 
         postManager.refreshFromDatabase();
 
@@ -58,7 +58,7 @@ public class TestRequest {
         List<Post> posts = database.getPostsForThread("requests");
         Post p = null;
         for (Post post : posts) {
-            if (post.getAuthorUsername().equals("student1") &&
+            if (post.getAuthorUsername().equals("staff1") &&
                 post.getContent().equals("How do I submit Assignment 3?")) {
                 p = post;
             }
@@ -92,7 +92,7 @@ public class TestRequest {
         List<Post> posts = database.getPostsForThread("requests");
         Post p = null;
         for (Post post : posts) {
-            if (post.getAuthorUsername().equals("student2") &&
+            if (post.getAuthorUsername().equals("staff2") &&
                 post.getContent().equals("Close-test-request")) {
                 p = post;
             }
@@ -130,7 +130,7 @@ public class TestRequest {
         List<Post> posts = database.getPostsForThread("requests");
         Post p = null;
         for (Post post : posts) {
-            if (post.getAuthorUsername().equals("student3") &&
+            if (post.getAuthorUsername().equals("staff3") &&
                 post.getContent().equals("Reopen-test-request")) {
                 p = post;
             }
